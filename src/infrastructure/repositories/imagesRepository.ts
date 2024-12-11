@@ -8,7 +8,7 @@ export class ImagesRepository {
     this.imagesService = imagesService;
   }
 
-  static getInstance(imagesService: ImagesService): ImagesRepository {
+  static getInstance(): ImagesRepository {
     if (!ImagesRepository.instance) {
       ImagesRepository.instance = new ImagesRepository(imagesService);
     }
@@ -20,4 +20,4 @@ export class ImagesRepository {
   }
 }
 
-export const imagesRepository = ImagesRepository.getInstance(imagesService);
+export const imagesRepository = ImagesRepository.getInstance();

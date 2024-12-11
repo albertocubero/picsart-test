@@ -1,19 +1,22 @@
-import { imagesRepository } from "../../infrastructure/repositories/imagesRepository";
+import { imagesRepository, ImagesRepository } from "../../infrastructure/repositories/imagesRepository";
 
-class GetImagesUseCase {
+export class GetImagesUseCase {
   private static instance: GetImagesUseCase;
+  private imagesRepository: ImagesRepository;
 
-  private constructor() {}
+  public constructor(imagesRepository: ImagesRepository) {
+    this.imagesRepository = imagesRepository;
+  }
 
   static getInstance(): GetImagesUseCase {
     if (!GetImagesUseCase.instance) {
-      GetImagesUseCase.instance = new GetImagesUseCase();
+      GetImagesUseCase.instance = new GetImagesUseCase(imagesRepository);
     }
     return GetImagesUseCase.instance;
   }
 
   async execute(): Promise<string[]> {
-    return imagesRepository.getImages();
+    return this.imagesRepository.getImages();
   }
 }
 

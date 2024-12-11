@@ -2,9 +2,8 @@ import { ImagesRepository } from "./imagesRepository";
 
 describe("ImagesRepository", () => {
   it("should always return the same instance", () => {
-    const imagesServiceMock = { getImages: jest.fn() };
-    const firstInstance = ImagesRepository.getInstance(imagesServiceMock);
-    const secondInstance = ImagesRepository.getInstance(imagesServiceMock);
+    const firstInstance = ImagesRepository.getInstance();
+    const secondInstance = ImagesRepository.getInstance();
 
     expect(firstInstance).toBe(secondInstance);
   });
