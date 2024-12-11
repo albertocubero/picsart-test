@@ -1,8 +1,13 @@
-function App() {
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import List from "./ui/list/List";
+
+const App: React.FC = () => {
   return (
-    <div>
-      <h1>Hello World</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<List />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
