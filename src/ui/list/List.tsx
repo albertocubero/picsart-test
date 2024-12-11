@@ -1,20 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import useGetImages from "../hooks/useGetImages";
 
 const List: React.FC = () => {
-  const [images, setImages] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const initialImages = [
-      "https://via.placeholder.com/150",
-      "https://via.placeholder.com/150",
-      "https://via.placeholder.com/150",
-    ];
-    setTimeout(() => {
-      setImages(initialImages);
-      setIsLoading(false);
-    }, 500);
-  }, []);
+  const { images, isLoading } = useGetImages();
 
   if (isLoading) {
     return <p>Loading...</p>;

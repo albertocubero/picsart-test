@@ -1,33 +1,46 @@
-import { render, screen, waitFor } from "@testing-library/react";
+// src/ui/list/__tests__/List.test.tsx
+import { render, screen } from "@testing-library/react";
 import List from "./List";
 
-describe("List Component", () => {
-  it("renders 'Loading...' initially", () => {
-    render(<List />);
+jest.mock("../hooks/useGetImages", () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
 
+const useGetImagesMock = require("../hooks/useGetImages").default;
+
+describe("List Component", () => {
+  it("renders loading state", () => {
+    useGetImagesMock.mockReturnValue({
+      isLoading: true,
+      images: [],
+    });
+
+    render(<List />);
     expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
   });
 
-  it("renders 'No images available' if no images are present", async () => {
-    render(<List />);
-
-    await waitFor(() => {
-      expect(screen.queryByText(/Loading.../i)).not.toBeInTheDocument();
+  it("renders images when available", () => {
+    useGetImagesMock.mockReturnValue({
+      isLoading: false,
+      images: [
+        "https://via.placeholder.com/150",
+        "https://via.placeholder.com/150",
+        "https://via.placeholder.com/150",
+      ],
     });
 
-    expect(screen.queryByText(/No images available/i)).not.toBeInTheDocument();
+    render(<List />);
+    expect(screen.getAllByRole("img")).toHaveLength(3);
   });
 
-  it("renders images", async () => {
-    render(<List />);
-
-    await waitFor(() => {
-      const images = screen.getAllByRole("img");
-      expect(images).toHaveLength(3);
+  it("renders 'No images available' when the array is empty", () => {
+    useGetImagesMock.mockReturnValue({
+      isLoading: false,
+      images: [],
     });
 
-    expect(screen.getByAltText("Image 1")).toHaveAttribute("src", "https://via.placeholder.com/150");
-    expect(screen.getByAltText("Image 2")).toHaveAttribute("src", "https://via.placeholder.com/150");
-    expect(screen.getByAltText("Image 3")).toHaveAttribute("src", "https://via.placeholder.com/150");
+    render(<List />);
+    expect(screen.getByText(/No images available/i)).toBeInTheDocument();
   });
 });
