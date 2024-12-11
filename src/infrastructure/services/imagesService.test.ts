@@ -1,46 +1,45 @@
-import { imagesService } from './imagesService';
+import axios from "axios";
+import MockAdapter from "axios-mock-adapter";
+import { ImagesService } from "./imagesService";
 
-describe('ImagesService', () => {
-  beforeAll(() => {
-    jest.useFakeTimers();
+const axiosMock = new MockAdapter(axios);
+
+describe("ImagesService", () => {
+  let imagesService: ImagesService;
+
+  beforeEach(() => {
+    imagesService = ImagesService.getInstance();
   });
 
-  afterAll(() => {
-    jest.useRealTimers();
+  afterEach(() => {
+    axiosMock.reset();
   });
 
-  it('should return the same instance from getInstance()', () => {
-    const instance1 = imagesService;
-    const instance2 = imagesService;
+  describe("getImages", () => {
+    it("should return the same instance from getInstance()", () => {
+      const instance1 = imagesService;
+      const instance2 = imagesService;
 
-    expect(instance1).toBe(instance2);
-  });
+      expect(instance1).toBe(instance2);
+    });
+    it("should return a list of image URLs from Pexels API", async () => {
+      const mockImages = [
+        "https://images.pexels.com/photos/12345/pexels-photo-12345.jpeg",
+        "https://images.pexels.com/photos/67890/pexels-photo-67890.jpeg",
+      ];
 
-  it('should return images after calling getImages()', async () => {
-    const mockImages = [
-      'https://via.placeholder.com/150',
-      'https://via.placeholder.com/150',
-      'https://via.placeholder.com/150',
-    ];
+      axiosMock
+        .onGet("https://api.pexels.com/v1/search?query=nature&per_page=5")
+        .reply(200, {
+          photos: [
+            { src: { small: mockImages[0] } },
+            { src: { small: mockImages[1] } },
+          ],
+        });
 
-    jest.spyOn(imagesService, 'getImages').mockResolvedValue(mockImages);
+      const images = await imagesService.getImages("nature");
 
-    const images = await imagesService.getImages();
-
-    expect(images).toEqual(mockImages);
-  });
-
-  it('should return a promise that resolves after a delay', async () => {
-    const promise = imagesService.getImages();
-
-    expect(promise).toBeInstanceOf(Promise);
-
-    jest.advanceTimersByTime(500);
-
-    await expect(promise).resolves.toEqual([
-      'https://via.placeholder.com/150',
-      'https://via.placeholder.com/150',
-      'https://via.placeholder.com/150',
-    ]);
+      expect(images).toEqual(mockImages);
+    });
   });
 });
