@@ -3,5 +3,23 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",          
+    "jsx": "react-jsx",   
+    "strict": true,                      
+    "esModuleInterop": true,
+    "skipLibCheck": true,                
+    "resolveJsonModule": true,
+    "types": ["jest", "@testing-library/jest-dom", "node"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "noImplicitAny": true,
+    "skipDefaultLibCheck": true
+  },
+  "exclude": ["node_modules", "dist"]
 }
