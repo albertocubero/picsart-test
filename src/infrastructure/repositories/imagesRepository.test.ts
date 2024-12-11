@@ -1,15 +1,12 @@
-import { imagesRepository } from "./imagesRepository";
-import { imagesService } from "../services/imagesService";
+import { ImagesRepository } from "./imagesRepository";
 
-jest.mock("../services/imagesService");
+describe("ImagesRepository", () => {
+  it("should always return the same instance", () => {
+    const imagesServiceMock = { getImages: jest.fn() };
+    const firstInstance = ImagesRepository.getInstance(imagesServiceMock);
+    const secondInstance = ImagesRepository.getInstance(imagesServiceMock);
 
-describe("ImagesRepository Singleton", () => {
-  beforeAll(() => {
-    jest.useFakeTimers();
-  });
-
-  afterAll(() => {
-    jest.useRealTimers();
+    expect(firstInstance).toBe(secondInstance);
   });
 
   it("should return a list of image URLs", async () => {
@@ -18,33 +15,13 @@ describe("ImagesRepository Singleton", () => {
       "https://via.placeholder.com/150",
       "https://via.placeholder.com/150",
     ];
-    
-    (imagesService.getImages as jest.Mock).mockResolvedValue(mockImages);
-    
+    const imagesServiceMock = {
+      getImages: jest.fn().mockResolvedValue(mockImages),
+    };
+    const imagesRepository = new ImagesRepository(imagesServiceMock);
+
     const images = await imagesRepository.getImages();
 
     expect(images).toEqual(mockImages);
-  });
-
-  it("should always return the same instance", () => {
-    const firstInstance = imagesRepository;
-    const secondInstance = imagesRepository;
-
-    expect(firstInstance).toBe(secondInstance);
-  });
-
-  it("should resolve after the simulated delay", async () => {
-    const mockImages = [
-      "https://via.placeholder.com/150",
-      "https://via.placeholder.com/150",
-      "https://via.placeholder.com/150",
-    ];
-    (imagesService.getImages as jest.Mock).mockResolvedValue(mockImages);
-
-    const promise = imagesRepository.getImages();
-
-    jest.advanceTimersByTime(500);
-
-    await expect(promise).resolves.toEqual(mockImages);
   });
 });
