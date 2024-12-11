@@ -1,23 +1,20 @@
+import { imagesService } from "../services/imagesService";
+
 export class ImagesRepository {
-    private static instance: ImagesRepository;
-  
-    private constructor() {}
-  
-    static getInstance(): ImagesRepository {
-      if (!ImagesRepository.instance) {
-        ImagesRepository.instance = new ImagesRepository();
-      }
-      return ImagesRepository.instance;
+  private static instance: ImagesRepository;
+
+  private constructor() {}
+
+  static getInstance(): ImagesRepository {
+    if (!ImagesRepository.instance) {
+      ImagesRepository.instance = new ImagesRepository();
     }
-  
-    async getImages(): Promise<string[]> {
-      return [
-        "https://via.placeholder.com/150",
-        "https://via.placeholder.com/150",
-        "https://via.placeholder.com/150",
-      ];
-    }
+    return ImagesRepository.instance;
   }
-  
-  export const imagesRepository = ImagesRepository.getInstance();
-  
+
+  async getImages(): Promise<string[]> {
+    return imagesService.getImages();
+  }
+}
+
+export const imagesRepository = ImagesRepository.getInstance();
