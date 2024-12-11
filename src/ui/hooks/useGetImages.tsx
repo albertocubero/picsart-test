@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react";
+import { getImagesUseCase } from "../../domain/useCases/getImagesUseCase";
 
 const useGetImages = () => {
   const [images, setImages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchImages = () => {
-      const fetchedImages = [
-        "https://via.placeholder.com/150",
-        "https://via.placeholder.com/150",
-        "https://via.placeholder.com/150",
-      ];
-      setTimeout(() => {
+    const fetchImages = async () => {
+      try {
+        const fetchedImages = await getImagesUseCase.execute();
         setImages(fetchedImages);
         setIsLoading(false);
-      }, 500);
+      } catch (error) {
+        console.error("Error fetching images:", error);
+        setIsLoading(false);
+      }
     };
 
     fetchImages();
