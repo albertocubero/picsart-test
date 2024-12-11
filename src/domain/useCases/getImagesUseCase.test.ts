@@ -1,4 +1,12 @@
+// src/domain/useCases/getImagesUseCase.test.ts
 import { getImagesUseCase } from "./getImagesUseCase";
+import { imagesRepository } from "../../infrastructure/repositories/imagesRepository";
+
+jest.mock("../../infrastructure/repositories/imagesRepository", () => ({
+  imagesRepository: {
+    getImages: jest.fn(),
+  },
+}));
 
 describe("GetImagesUseCase", () => {
   beforeAll(() => {
@@ -23,7 +31,7 @@ describe("GetImagesUseCase", () => {
       "https://via.placeholder.com/150",
     ];
 
-    jest.spyOn(getImagesUseCase, "execute").mockResolvedValue(mockImages);
+    (imagesRepository.getImages as jest.Mock).mockResolvedValue(mockImages);
 
     const images = await getImagesUseCase.execute();
 
@@ -31,16 +39,20 @@ describe("GetImagesUseCase", () => {
   });
 
   it("should return a promise that resolves after a delay", async () => {
+    const mockImages = [
+      "https://via.placeholder.com/150",
+      "https://via.placeholder.com/150",
+      "https://via.placeholder.com/150",
+    ];
+
+    (imagesRepository.getImages as jest.Mock).mockResolvedValue(mockImages);
+
     const promise = getImagesUseCase.execute();
 
     expect(promise).toBeInstanceOf(Promise);
 
     jest.advanceTimersByTime(500);
 
-    await expect(promise).resolves.toEqual([
-      "https://via.placeholder.com/150",
-      "https://via.placeholder.com/150",
-      "https://via.placeholder.com/150",
-    ]);
+    await expect(promise).resolves.toEqual(mockImages);
   });
 });

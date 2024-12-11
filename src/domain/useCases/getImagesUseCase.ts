@@ -1,27 +1,20 @@
+import { imagesRepository } from "../../infrastructure/repositories/imagesRepository";
+
 class GetImagesUseCase {
-    private static instance: GetImagesUseCase;
-  
-    private constructor() {}
-  
-    static getInstance() {
-      if (!GetImagesUseCase.instance) {
-        GetImagesUseCase.instance = new GetImagesUseCase();
-      }
-      return GetImagesUseCase.instance;
+  private static instance: GetImagesUseCase;
+
+  private constructor() {}
+
+  static getInstance(): GetImagesUseCase {
+    if (!GetImagesUseCase.instance) {
+      GetImagesUseCase.instance = new GetImagesUseCase();
     }
-  
-    async execute(): Promise<string[]> {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve([
-            "https://via.placeholder.com/150",
-            "https://via.placeholder.com/150",
-            "https://via.placeholder.com/150",
-          ]);
-        }, 500);
-      });
-    }
+    return GetImagesUseCase.instance;
   }
-  
-  export const getImagesUseCase = GetImagesUseCase.getInstance();
-  
+
+  async execute(): Promise<string[]> {
+    return imagesRepository.getImages();
+  }
+}
+
+export const getImagesUseCase = GetImagesUseCase.getInstance();
