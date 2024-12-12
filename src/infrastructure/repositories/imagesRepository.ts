@@ -18,6 +18,10 @@ export class ImagesRepository {
   async getImages(): Promise<string[]> {
     return this.imagesService.getImages();
   }
+
+  async getImageById(id: string): Promise<any> {
+    return this.imagesService.getImageById(id);
+  }
 }
 
 export const imagesRepository = ImagesRepository.getInstance();

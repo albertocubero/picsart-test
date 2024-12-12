@@ -24,4 +24,27 @@ describe("ImagesRepository", () => {
 
     expect(images).toEqual(mockImages);
   });
+
+  it("should return image details for a specific image by ID", async () => {
+    const imageId = "12345";
+    const mockImageDetails = {
+      id: imageId,
+      url: `https://www.pexels.com/photo/${imageId}`,
+      photographer: "John Doe",
+      photographer_url: "https://www.pexels.com/@johndoe",
+      alt: "A beautiful sunset over the ocean",
+      src: `https://images.pexels.com/photos/${imageId}/pexels-photo-12345.jpeg`,
+    };
+
+    const imagesServiceMock = {
+      getImages: jest.fn().mockResolvedValue([]),
+      getImageById: jest.fn().mockResolvedValue(mockImageDetails),
+    };
+
+    const imagesRepository = new ImagesRepository(imagesServiceMock);
+    const imageDetails = await imagesRepository.getImageById(imageId);
+
+    expect(imageDetails).toEqual(mockImageDetails);
+    expect(imagesServiceMock.getImageById).toHaveBeenCalledWith(imageId);
+  });
 });
