@@ -53,7 +53,7 @@ describe("ImagesService", () => {
         photographer: "John Doe",
         photographer_url: "https://www.pexels.com/@johndoe",
         alt: "A beautiful sunset over the ocean",
-        src: `https://images.pexels.com/photos/${imageId}/pexels-photo-12345.jpeg`,  // src original
+        src: `https://images.pexels.com/photos/${imageId}/pexels-photo-12345.jpeg`,
       };
 
       axiosMock
