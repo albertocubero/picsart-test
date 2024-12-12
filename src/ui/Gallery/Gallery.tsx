@@ -1,5 +1,6 @@
 import React from "react";
 import useGetImages from "@/ui/hooks/useGetImages";
+import { Link } from "react-router-dom";
 
 const Gallery: React.FC = () => {
   const { images, isLoading } = useGetImages();
@@ -14,13 +15,14 @@ const Gallery: React.FC = () => {
         <p>No images available</p>
       ) : (
         <>
-          {images.map((url, index) => (
-            <img
-              key={index}
-              src={url}
-              alt={`Image ${index + 1}`}
-              style={{ width: "100%", height: "auto" }}
-            />
+          {images.map(({ id, url }) => (
+            <Link key={id} to={`/image/${id}`}>
+              <img
+                src={url}
+                alt={`Image ${id}`}
+                style={{ width: "100%", height: "auto" }}
+              />
+            </Link>
           ))}
         </>
       )}

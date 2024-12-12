@@ -23,18 +23,18 @@ describe("ImagesService", () => {
   });
 
   describe("getImages", () => {
-    it("should return a list of image URLs from Pexels API", async () => {
+    it("should return a list of image IDs and URLs from Pexels API", async () => {
       const mockImages = [
-        "https://images.pexels.com/photos/12345/pexels-photo-12345.jpeg",
-        "https://images.pexels.com/photos/67890/pexels-photo-67890.jpeg",
+        { id: "12345", url: "https://images.pexels.com/photos/12345/pexels-photo-12345.jpeg" },
+        { id: "67890", url: "https://images.pexels.com/photos/67890/pexels-photo-67890.jpeg" },
       ];
 
       axiosMock
         .onGet("https://api.pexels.com/v1/search?query=nature&per_page=5")
         .reply(200, {
           photos: [
-            { src: { small: mockImages[0] } },
-            { src: { small: mockImages[1] } },
+            { id: "12345", src: { small: mockImages[0].url } },
+            { id: "67890", src: { small: mockImages[1].url } },
           ],
         });
 

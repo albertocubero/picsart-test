@@ -11,9 +11,14 @@ describe("GetImagesUseCase", () => {
 
   it("should return images after calling execute()", async () => {
     const mockImages = [
-      "https://via.placeholder.com/150",
-      "https://via.placeholder.com/150",
-      "https://via.placeholder.com/150",
+      {
+        id: "12345",
+        url: "https://images.pexels.com/photos/12345/pexels-photo-12345.jpeg",
+      },
+      {
+        id: "67890",
+        url: "https://images.pexels.com/photos/67890/pexels-photo-67890.jpeg",
+      },
     ];
     const imagesRepositoryMock = {
       getImages: jest.fn().mockResolvedValue(mockImages),

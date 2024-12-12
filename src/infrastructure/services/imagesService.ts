@@ -15,7 +15,7 @@ export class ImagesService {
     return ImagesService.instance;
   }
 
-  async getImages(query: string = "nature"): Promise<string[]> {
+  async getImages(query: string = "nature"): Promise<{ id: string; url: string }[]> {
     try {
       const response = await axios.get(
         `https://api.pexels.com/v1/search?query=${query}&per_page=5`,
@@ -26,9 +26,10 @@ export class ImagesService {
         }
       );
 
-      return response.data.photos.map(
-        (photo: { src: { small: string } }) => photo.src.small
-      );
+      return response.data.photos.map((photo: { id: string; src: { small: string } }) => ({
+        id: photo.id,
+        url: photo.src.small,
+      }));
     } catch (error) {
       console.error("Error fetching images from Pexels:", error);
       throw new Error("Unable to fetch images from Pexels");

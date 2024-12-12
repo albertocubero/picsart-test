@@ -15,7 +15,7 @@ export class GetImagesUseCase {
     return GetImagesUseCase.instance;
   }
 
-  async execute(): Promise<string[]> {
+  async execute(): Promise<{ id: string; url: string }[]> {
     return this.imagesRepository.getImages();
   }
 }

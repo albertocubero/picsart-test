@@ -15,7 +15,7 @@ export class ImagesRepository {
     return ImagesRepository.instance;
   }
 
-  async getImages(): Promise<string[]> {
+  async getImages(): Promise<{ id: string; url: string }[]> {
     return this.imagesService.getImages();
   }
 

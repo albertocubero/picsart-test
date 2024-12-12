@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getImagesUseCase } from "@/domain/useCases/getImagesUseCase";
 
 const useGetImages = () => {
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<{ id: string; url: string }[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
