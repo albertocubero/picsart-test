@@ -1,4 +1,5 @@
-import { imagesService, IImagesService } from "@/infrastructure/services/imagesService";
+import { IImagesService } from "@/infrastructure/services/imagesService";
+import { cachedImagesService } from "../services/cachedImagesService";
 
 export class ImagesRepository {
   private static instance: ImagesRepository;
@@ -10,7 +11,7 @@ export class ImagesRepository {
 
   static getInstance(): ImagesRepository {
     if (!ImagesRepository.instance) {
-      ImagesRepository.instance = new ImagesRepository(imagesService);
+      ImagesRepository.instance = new ImagesRepository(cachedImagesService);
     }
     return ImagesRepository.instance;
   }
