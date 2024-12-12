@@ -16,6 +16,7 @@ describe("ImagesRepository", () => {
     ];
     const imagesServiceMock = {
       getImages: jest.fn().mockResolvedValue(mockImages),
+      getImageById: jest.fn()
     };
     const imagesRepository = new ImagesRepository(imagesServiceMock);
 

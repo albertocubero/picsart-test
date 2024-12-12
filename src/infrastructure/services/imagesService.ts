@@ -34,6 +34,31 @@ export class ImagesService {
       throw new Error("Unable to fetch images from Pexels");
     }
   }
+
+  async getImageById(id: string): Promise<any> {
+    try {
+      const response = await axios.get(
+        `https://api.pexels.com/v1/photos/${id}`,
+        {
+          headers: {
+            Authorization: YOUR_PEXELS_API_KEY,
+          },
+        }
+      );
+
+      return {
+        id: response.data.id,
+        url: response.data.url,
+        photographer: response.data.photographer,
+        photographer_url: response.data.photographer_url,
+        alt: response.data.alt,
+        src: response.data.src.original,
+      };
+    } catch (error) {
+      console.error(`Error fetching image with ID ${id}:`, error);
+      throw new Error(`Unable to fetch image with ID ${id}`);
+    }
+  }
 }
 
 export const imagesService = ImagesService.getInstance();
