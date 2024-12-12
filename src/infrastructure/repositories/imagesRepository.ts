@@ -1,4 +1,4 @@
-import { imagesService, ImagesService } from "../services/imagesService";
+import { imagesService, ImagesService } from "@/infrastructure/services/imagesService";
 
 export class ImagesRepository {
   private static instance: ImagesRepository;

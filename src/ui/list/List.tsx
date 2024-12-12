@@ -1,5 +1,5 @@
 import React from "react";
-import useGetImages from "../hooks/useGetImages";
+import useGetImages from "@/ui/hooks/useGetImages";
 
 const List: React.FC = () => {
   const { images, isLoading } = useGetImages();

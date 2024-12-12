@@ -1,4 +1,4 @@
-import { imagesRepository, ImagesRepository } from "../../infrastructure/repositories/imagesRepository";
+import { imagesRepository, ImagesRepository } from "@/infrastructure/repositories/imagesRepository";
 
 export class GetImagesUseCase {
   private static instance: GetImagesUseCase;

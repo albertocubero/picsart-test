@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
 import { Route, Routes } from "react-router-dom";
 import ImageDetail from "./ImageDetail";
-import { renderWithRouter } from "../../test-utils/renderWithRouter";
+import { renderWithRouter } from "@/test-utils/renderWithRouter";
 
 describe("ImageDetail", () => {
   it("should display the image ID from the URL", () => {

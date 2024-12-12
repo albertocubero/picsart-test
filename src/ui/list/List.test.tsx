@@ -1,8 +1,7 @@
-// src/ui/list/__tests__/List.test.tsx
 import { render, screen } from "@testing-library/react";
 import List from "./List";
 
-jest.mock("../hooks/useGetImages", () => ({
+jest.mock("@/ui/hooks/useGetImages", () => ({
   __esModule: true,
   default: jest.fn(),
 }));

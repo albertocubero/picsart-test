@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getImagesUseCase } from "../../domain/useCases/getImagesUseCase";
+import { getImagesUseCase } from "@/domain/useCases/getImagesUseCase";
 
 const useGetImages = () => {
   const [images, setImages] = useState<string[]>([]);

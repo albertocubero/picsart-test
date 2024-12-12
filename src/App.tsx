@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import List from "./ui/list/List";
-import ImageDetail from "./ui/ImageDetail/ImageDetail";
+import List from "@/ui/list/List";
+import ImageDetail from "@/ui/ImageDetail/ImageDetail";
 
 const App: React.FC = () => {
   return (

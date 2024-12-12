@@ -1,5 +1,5 @@
 import { GetImagesUseCase } from "./getImagesUseCase";
-import { ImagesRepository } from "../../infrastructure/repositories/imagesRepository";
+import { ImagesRepository } from "@/infrastructure/repositories/imagesRepository";
 
 describe("GetImagesUseCase", () => {
   it("should return the same instance from getInstance()", () => {
