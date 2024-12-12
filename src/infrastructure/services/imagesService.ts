@@ -15,7 +15,8 @@ export class ImagesService {
     return ImagesService.instance;
   }
 
-  async getImages(query: string = "nature"): Promise<{ id: string; url: string }[]> {
+  async getImages(): Promise<{ id: string; url: string }[]> {
+    const query: string = "nature";
     try {
       const response = await axios.get(
         `https://api.pexels.com/v1/search?query=${query}&per_page=5`,
@@ -61,5 +62,6 @@ export class ImagesService {
     }
   }
 }
+
 
 export const imagesService = ImagesService.getInstance();

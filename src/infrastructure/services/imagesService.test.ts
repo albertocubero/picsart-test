@@ -38,7 +38,7 @@ describe("ImagesService", () => {
           ],
         });
 
-      const images = await imagesService.getImages("nature");
+      const images = await imagesService.getImages();
 
       expect(images).toEqual(mockImages);
     });
