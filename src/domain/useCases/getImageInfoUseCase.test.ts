@@ -2,7 +2,7 @@ import { GetImageInfoUseCase } from "./getImageInfoUseCase";
 import { ImagesRepository } from "@/infrastructure/repositories/imagesRepository";
 
 describe("GetImageInfoUseCase", () => {
-  it("should return the same instance from getInstance()", () => {
+  it("should return the same instance ", () => {
     const instance1 = GetImageInfoUseCase.getInstance();
     const instance2 = GetImageInfoUseCase.getInstance();
 

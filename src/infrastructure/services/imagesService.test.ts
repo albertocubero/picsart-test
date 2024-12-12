@@ -15,9 +15,9 @@ describe("ImagesService", () => {
     axiosMock.reset();
   });
 
-  it("should return the same instance from getInstance()", () => {
-    const instance1 = imagesService;
-    const instance2 = imagesService;
+  it("should return the same instance", () => {
+    const instance1 = ImagesService.getInstance();
+    const instance2 = ImagesService.getInstance();
 
     expect(instance1).toBe(instance2);
   });
