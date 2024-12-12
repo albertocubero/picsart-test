@@ -1,7 +1,7 @@
 import React from "react";
 import useGetImages from "@/ui/hooks/useGetImages";
 
-const List: React.FC = () => {
+const Gallery: React.FC = () => {
   const { images, isLoading } = useGetImages();
 
   if (isLoading) {
@@ -28,4 +28,4 @@ const List: React.FC = () => {
   );
 };
 
-export default List;
+export default Gallery;

@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import List from "@/ui/list/List";
+import Gallery from "@/ui/Gallery/Gallery";
 import ImageDetail from "@/ui/ImageDetail/ImageDetail";
 import NotFound from "@/ui/404/NotFound";
 
@@ -8,7 +8,7 @@ const App: React.FC = () => {
     <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
       <Routes>
         <Route path="/image/:id" element={<ImageDetail />} />
-        <Route path="/" element={<List />} />
+        <Route path="/" element={<Gallery />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

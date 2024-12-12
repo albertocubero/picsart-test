@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import List from "./List";
+import Gallery from "./Gallery";
 
 jest.mock("@/ui/hooks/useGetImages", () => ({
   __esModule: true,
@@ -15,7 +15,7 @@ describe("List Component", () => {
       images: [],
     });
 
-    render(<List />);
+    render(<Gallery />);
     expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
   });
 
@@ -29,7 +29,7 @@ describe("List Component", () => {
       ],
     });
 
-    render(<List />);
+    render(<Gallery />);
     expect(screen.getAllByRole("img")).toHaveLength(3);
   });
 
@@ -39,7 +39,7 @@ describe("List Component", () => {
       images: [],
     });
 
-    render(<List />);
+    render(<Gallery />);
     expect(screen.getByText(/No images available/i)).toBeInTheDocument();
   });
 });
