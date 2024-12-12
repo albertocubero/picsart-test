@@ -1,9 +1,21 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
-const YOUR_PEXELS_API_KEY =
-  "bgXTzzTW6r9wLERXdeNzdIaXL3GnVQts7iaXupLBNlb8OYUAzeuE9c2o";
+const PEXELS_API_BASE_URL = "https://api.pexels.com/v1";
+const PEXELS_API_KEY = "bgXTzzTW6r9wLERXdeNzdIaXL3GnVQts7iaXupLBNlb8OYUAzeuE9c2o";
 
-export class ImagesService {
+export interface IImagesService {
+  getImages(): Promise<{ id: string; url: string }[]>;
+  getImageById(id: string): Promise<{
+    id: string;
+    url: string;
+    photographer: string;
+    photographer_url: string;
+    alt: string;
+    src: string;
+  }>;
+}
+
+export class ImagesService implements IImagesService {
   private static instance: ImagesService;
 
   private constructor() {}
@@ -16,52 +28,60 @@ export class ImagesService {
   }
 
   async getImages(): Promise<{ id: string; url: string }[]> {
-    const query: string = "nature";
-    try {
-      const response = await axios.get(
-        `https://api.pexels.com/v1/search?query=${query}&per_page=5`,
-        {
-          headers: {
-            Authorization: YOUR_PEXELS_API_KEY,
-          },
-        }
-      );
+    const query = "nature";
+    const url = `${PEXELS_API_BASE_URL}/search?query=${query}&per_page=5`;
 
-      return response.data.photos.map((photo: { id: string; src: { small: string } }) => ({
-        id: photo.id,
-        url: photo.src.small,
-      }));
+    const data = await this.fetchFromPexels(url);
+
+    return data.photos.map(({ id, src }: { id: string; src: { small: string } }) => ({
+      id,
+      url: src.small,
+    }));
+  }
+
+  async getImageById(id: string): Promise<{
+    id: string;
+    url: string;
+    photographer: string;
+    photographer_url: string;
+    alt: string;
+    src: string;
+  }> {
+    const url = `${PEXELS_API_BASE_URL}/photos/${id}`;
+    
+    const data = await this.fetchFromPexels(url);
+
+    return {
+      id: data.id,
+      url: data.url,
+      photographer: data.photographer,
+      photographer_url: data.photographer_url,
+      alt: data.alt,
+      src: data.src.original,
+    };
+  }
+
+  private async fetchFromPexels(url: string): Promise<any> {
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: PEXELS_API_KEY,
+        },
+      });
+      return response.data;
     } catch (error) {
-      console.error("Error fetching images from Pexels:", error);
-      throw new Error("Unable to fetch images from Pexels");
+      this.handleError(error);
     }
   }
 
-  async getImageById(id: string): Promise<any> {
-    try {
-      const response = await axios.get(
-        `https://api.pexels.com/v1/photos/${id}`,
-        {
-          headers: {
-            Authorization: YOUR_PEXELS_API_KEY,
-          },
-        }
-      );
-
-      return {
-        id: response.data.id,
-        url: response.data.url,
-        photographer: response.data.photographer,
-        photographer_url: response.data.photographer_url,
-        alt: response.data.alt,
-        src: response.data.src.original,
-      };
-    } catch (error) {
-      console.error(`Error fetching image with ID ${id}:`, error);
-      throw new Error(`Unable to fetch image with ID ${id}`);
+  private handleError(error: unknown): void {
+    if (error instanceof AxiosError) {
+      console.error("Error fetching data from Pexels:", error.response?.data || error.message);
+    } else {
+      console.error("Error fetching data from Pexels:", error);
     }
+    throw new Error("Unable to fetch data from Pexels");
   }
 }
-
 
 export const imagesService = ImagesService.getInstance();

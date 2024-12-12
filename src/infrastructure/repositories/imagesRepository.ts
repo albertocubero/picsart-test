@@ -1,10 +1,10 @@
-import { imagesService, ImagesService } from "@/infrastructure/services/imagesService";
+import { imagesService, IImagesService } from "@/infrastructure/services/imagesService";
 
 export class ImagesRepository {
   private static instance: ImagesRepository;
-  private imagesService: ImagesService;
+  private imagesService: IImagesService;
 
-  public constructor(imagesService: ImagesService) {
+  public constructor(imagesService: IImagesService) {
     this.imagesService = imagesService;
   }
 
