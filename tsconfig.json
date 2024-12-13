@@ -19,7 +19,8 @@
       "@/*": ["src/*"]
     },
     "noImplicitAny": true,
-    "skipDefaultLibCheck": true
+    "skipDefaultLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
   "exclude": ["node_modules", "dist"]
 }
