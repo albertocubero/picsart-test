@@ -54,6 +54,8 @@ describe("Gallery Component", () => {
     images.forEach((image, index) => {
       const link = image.closest("a");
       expect(link).toHaveAttribute("href", `/image/${index + 1}`);
+      expect(image).toHaveAttribute("src", `https://via.placeholder.com/150`);
+      expect(image).toHaveAttribute("alt", `Image ${index + 1}`);
     });
   });
 

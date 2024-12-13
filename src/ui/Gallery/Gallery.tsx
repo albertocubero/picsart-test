@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useGetImages from "@/ui/hooks/useGetImages";
+import { LazyLoadingImage } from "@/ui/Gallery/LazyLoadingImage";
 
 const Gallery: React.FC = () => {
   const { images, isLoading } = useGetImages();
@@ -23,15 +24,7 @@ const Gallery: React.FC = () => {
         <>
           {images.map(({ id, url }) => (
             <Link key={id} to={`/image/${id}`} style={{ flex: "1 0 400px" }}>
-              <img
-                src={url}
-                alt={`Image ${id}`}
-                style={{
-                  width: "100%",
-                  height: "auto",
-                  borderRadius: "8px",
-                }}
-              />
+              <LazyLoadingImage url={url} id={id} />
             </Link>
           ))}
         </>
@@ -39,5 +32,7 @@ const Gallery: React.FC = () => {
     </div>
   );
 };
+
+
 
 export default Gallery;
