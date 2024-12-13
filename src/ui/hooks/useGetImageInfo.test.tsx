@@ -2,7 +2,7 @@ import { renderHook, waitFor, act } from "@testing-library/react";
 import useGetImageInfo from "./useGetImageInfo";
 import { getImageInfoUseCase } from "@/domain/useCases/getImageInfoUseCase";
 
-jest.mock("../../domain/useCases/getImageInfoUseCase", () => ({
+jest.mock("@/domain/useCases/getImageInfoUseCase", () => ({
   getImageInfoUseCase: {
     execute: jest.fn(),
   },

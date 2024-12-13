@@ -1,9 +1,8 @@
 import { screen, waitFor } from "@testing-library/react";
-import ImageDetail from "./ImageDetail";
-import useGetImageInfo from "@/ui/hooks/useGetImageInfo";
-import { renderWithRouter } from "@/test-utils/renderWithRouter";
 import { Route, Routes } from "react-router-dom";
-
+import { renderWithRouter } from "@/test-utils/renderWithRouter";
+import ImageDetail from "@/ui/ImageDetail/ImageDetail";
+import useGetImageInfo from "@/ui/hooks/useGetImageInfo";
 
 jest.mock("@/ui/hooks/useGetImageInfo", () => ({
   __esModule: true,

@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
 import { Routes, Route } from "react-router-dom";
-import Gallery from "./Gallery";
 import { renderWithRouter } from "@/test-utils/renderWithRouter";
+import Gallery from "@/ui/Gallery/Gallery";
 
 jest.mock("@/ui/hooks/useGetImages", () => ({
   __esModule: true,

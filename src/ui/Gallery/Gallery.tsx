@@ -1,6 +1,6 @@
 import React from "react";
-import useGetImages from "@/ui/hooks/useGetImages";
 import { Link } from "react-router-dom";
+import useGetImages from "@/ui/hooks/useGetImages";
 
 const Gallery: React.FC = () => {
   const { images, isLoading } = useGetImages();

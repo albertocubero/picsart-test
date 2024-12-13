@@ -1,4 +1,4 @@
-import { ImagesRepository } from "./imagesRepository";
+import { ImagesRepository } from "@/infrastructure/repositories/imagesRepository";
 
 describe("ImagesRepository", () => {
   it("should always return the same instance", () => {

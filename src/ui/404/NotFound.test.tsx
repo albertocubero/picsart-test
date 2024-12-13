@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
 import { Route, Routes } from "react-router-dom";
-import NotFound from "@/ui/404/NotFound";
 import { renderWithRouter } from "@/test-utils/renderWithRouter";
+import NotFound from "@/ui/404/NotFound";
 
 describe("NotFound", () => {
   it("renders the 404 message and a link to the homepage", () => {

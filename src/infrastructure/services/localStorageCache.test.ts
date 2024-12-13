@@ -1,4 +1,4 @@
-import { localStorageCache } from "./LocalStorageCache";
+import { localStorageCache } from "@/infrastructure/services/localStorageCache";
 
 describe("localStorageCache", () => {
   let mockLocalStorage: jest.Mocked<Storage>;

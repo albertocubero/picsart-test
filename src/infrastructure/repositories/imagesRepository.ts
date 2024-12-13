@@ -1,5 +1,5 @@
 import { IImagesService } from "@/infrastructure/services/imagesService";
-import { cachedImagesService } from "../services/cachedImagesService";
+import { cachedImagesService } from "@/infrastructure/services/cachedImagesService";
 
 export class ImagesRepository {
   private static instance: ImagesRepository;

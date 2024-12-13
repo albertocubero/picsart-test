@@ -1,5 +1,5 @@
-import { IImagesService, imagesService } from "./imagesService";
-import { localStorageCache, LocalStorageCache } from "./LocalStorageCache";
+import { IImagesService, imagesService } from "@/infrastructure/services/imagesService";
+import { localStorageCache, LocalStorageCache } from "@/infrastructure/services/localStorageCache";
 
 const STORAGE_KEY_PREFIX = "pexels";
 

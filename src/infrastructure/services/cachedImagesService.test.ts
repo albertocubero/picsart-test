@@ -1,6 +1,6 @@
-import { CachedImagesService } from "./cachedImagesService";
-import { IImagesService } from "./imagesService";
-import { LocalStorageCache } from "./LocalStorageCache";
+import { CachedImagesService } from "@/infrastructure/services/cachedImagesService";
+import { IImagesService } from "@/infrastructure/services/imagesService";
+import { LocalStorageCache } from "@/infrastructure/services/localStorageCache";
 
 describe("CachedImagesService", () => {
   let mockLocalStorageCache: jest.Mocked<LocalStorageCache>;
