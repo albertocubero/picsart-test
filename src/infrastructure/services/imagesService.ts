@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 
 const PEXELS_API_BASE_URL = "https://api.pexels.com/v1";
-const PEXELS_API_KEY = "bgXTzzTW6r9wLERXdeNzdIaXL3GnVQts7iaXupLBNlb8OYUAzeuE9c2o";
+const PEXELS_API_KEY = process.env.PEXELS_API_KEY;
 
 export interface IImagesService {
   getImages(): Promise<{ id: string; url: string }[]>;
