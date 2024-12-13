@@ -30,13 +30,13 @@ export class ImagesService implements IImagesService {
 
   async getImages(): Promise<{ id: string; url: string }[]> {
     const query = "nature";
-    const url = `${PEXELS_API_BASE_URL}/search?query=${query}&per_page=5`;
+    const url = `${PEXELS_API_BASE_URL}/search?query=${query}&per_page=80`;
 
     const data = await this.fetchFromPexels(url);
 
-    return data.photos.map(({ id, src }: { id: string; src: { small: string } }) => ({
+    return data.photos.map(({ id, src }: { id: string; src: { medium: string } }) => ({
       id,
-      url: src.small,
+      url: src.medium,
     }));
   }
 
