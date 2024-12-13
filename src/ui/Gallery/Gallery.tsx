@@ -10,17 +10,27 @@ const Gallery: React.FC = () => {
   }
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "16px",
+      }}
+    >
       {images.length === 0 ? (
         <p>No images available</p>
       ) : (
         <>
           {images.map(({ id, url }) => (
-            <Link key={id} to={`/image/${id}`}>
+            <Link key={id} to={`/image/${id}`} style={{ flex: "1 0 400px" }}>
               <img
                 src={url}
                 alt={`Image ${id}`}
-                style={{ width: "100%", height: "auto" }}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  borderRadius: "8px",
+                }}
               />
             </Link>
           ))}
