@@ -30,11 +30,11 @@ describe("ImagesService", () => {
       ];
 
       axiosMock
-        .onGet("https://api.pexels.com/v1/search?query=nature&per_page=5")
+        .onGet("https://api.pexels.com/v1/search?query=nature&per_page=80")
         .reply(200, {
           photos: [
-            { id: "12345", src: { small: mockImages[0].url } },
-            { id: "67890", src: { small: mockImages[1].url } },
+            { id: "12345", src: { medium: mockImages[0].url } },
+            { id: "67890", src: { medium: mockImages[1].url } },
           ],
         });
 
