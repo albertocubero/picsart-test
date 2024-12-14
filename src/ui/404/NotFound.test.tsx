@@ -4,7 +4,7 @@ import { renderWithRouter } from "@/test-utils/renderWithRouter";
 import NotFound from "@/ui/404/NotFound";
 
 describe("NotFound", () => {
-  it("renders the 404 message and a link to the homepage", () => {
+  it("should render the 404 message and a link to the homepage", () => {
     renderWithRouter({
       route: "/wrong/route",
       children: (

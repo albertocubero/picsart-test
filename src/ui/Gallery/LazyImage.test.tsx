@@ -5,7 +5,7 @@ describe("LazyImage Component", () => {
   const mockUrl = "https://via.placeholder.com/150";
   const mockId = "1";
 
-  it("renders the image with lazy configuration", () => {
+  it("should render the image with lazy configuration", () => {
     render(<LazyImage id={mockId} url={mockUrl} />);
 
     const imgElement = screen.getByRole("img");

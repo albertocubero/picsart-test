@@ -11,7 +11,7 @@ jest.mock("@/ui/hooks/useGetImages", () => ({
 const useGetImagesMock = require("@/ui/hooks/useGetImages").default;
 
 describe("Gallery Component", () => {
-  it("renders loading state", () => {
+  it("should render loading state", () => {
     useGetImagesMock.mockReturnValue({
       isLoading: true,
       images: [],
@@ -29,7 +29,7 @@ describe("Gallery Component", () => {
     expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
   });
 
-  it("renders images when available", () => {
+  it("should render images when available", () => {
     const imagesFetched = [
       { id: "1", url: "https://via.placeholder.com/150" },
       { id: "2", url: "https://via.placeholder.com/150" },
@@ -60,7 +60,7 @@ describe("Gallery Component", () => {
     });
   });
 
-  it("renders No images available when the array is empty", () => {
+  it("should render No images available when the array is empty", () => {
     useGetImagesMock.mockReturnValue({
       isLoading: false,
       images: [],
