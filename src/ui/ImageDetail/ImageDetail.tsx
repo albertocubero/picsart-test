@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useParams } from "react-router-dom";
 import useGetImageInfo from "@/ui/hooks/useGetImageInfo";
 
@@ -39,4 +39,4 @@ const ImageDetail: React.FC = () => {
   );
 };
 
-export default ImageDetail;
+export default memo(ImageDetail);

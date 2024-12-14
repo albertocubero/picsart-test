@@ -1,7 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { memo } from "react";
 import useGetImages from "@/ui/hooks/useGetImages";
-import { LazyLoadingImage } from "@/ui/Gallery/LazyLoadingImage";
+import { Card } from "./Card";
 
 const Gallery: React.FC = () => {
   const { images, isLoading } = useGetImages();
@@ -21,18 +20,10 @@ const Gallery: React.FC = () => {
       {images.length === 0 ? (
         <p>No images available</p>
       ) : (
-        <>
-          {images.map(({ id, url }) => (
-            <Link key={id} to={`/image/${id}`} style={{ flex: "1 0 400px" }}>
-              <LazyLoadingImage url={url} id={id} />
-            </Link>
-          ))}
-        </>
+        images.map(({ id, url }) => <Card key={id} id={id} url={url} />)
       )}
     </div>
   );
 };
 
-
-
-export default Gallery;
+export default memo(Gallery);

@@ -18,10 +18,10 @@ describe("Gallery Component", () => {
     });
 
     renderWithRouter({
-      route: "/image/1",
+      route: "/",
       children: (
         <Routes>
-          <Route path="/image/:id" element={<Gallery />} />
+          <Route path="/" element={<Gallery />} />
         </Routes>
       ),
     });
@@ -30,20 +30,21 @@ describe("Gallery Component", () => {
   });
 
   it("renders images when available", () => {
+    const imagesFetched = [
+      { id: "1", url: "https://via.placeholder.com/150" },
+      { id: "2", url: "https://via.placeholder.com/150" },
+      { id: "3", url: "https://via.placeholder.com/150" },
+    ]
     useGetImagesMock.mockReturnValue({
       isLoading: false,
-      images: [
-        { id: "1", url: "https://via.placeholder.com/150" },
-        { id: "2", url: "https://via.placeholder.com/150" },
-        { id: "3", url: "https://via.placeholder.com/150" },
-      ],
+      images: imagesFetched
     });
 
     renderWithRouter({
-      route: "/image/1",
+      route: "/",
       children: (
         <Routes>
-          <Route path="/image/:id" element={<Gallery />} />
+          <Route path="/" element={<Gallery />} />
         </Routes>
       ),
     });
@@ -53,9 +54,9 @@ describe("Gallery Component", () => {
 
     images.forEach((image, index) => {
       const link = image.closest("a");
-      expect(link).toHaveAttribute("href", `/image/${index + 1}`);
-      expect(image).toHaveAttribute("src", `https://via.placeholder.com/150`);
-      expect(image).toHaveAttribute("alt", `Image ${index + 1}`);
+      expect(link).toHaveAttribute("href", `/image/${imagesFetched[index].id}`);
+      expect(image).toHaveAttribute("src", `${imagesFetched[index].url}`);
+      expect(image).toHaveAttribute("alt", `Image ${imagesFetched[index].id}`);
     });
   });
 

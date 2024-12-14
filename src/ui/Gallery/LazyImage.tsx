@@ -1,14 +1,11 @@
-import React from "react";
+import React, { memo } from "react";
 
-interface LazyLoadingImageProps {
+interface LazyImageProps {
   id: string;
   url: string;
 }
 
-export const LazyLoadingImage: React.FC<LazyLoadingImageProps> = ({
-  url,
-  id,
-}) => {
+export const LazyImage: React.FC<LazyImageProps> = memo(({ url, id }) => {
   return (
     <div
       style={{
@@ -31,4 +28,4 @@ export const LazyLoadingImage: React.FC<LazyLoadingImageProps> = ({
       />
     </div>
   );
-};
+});
