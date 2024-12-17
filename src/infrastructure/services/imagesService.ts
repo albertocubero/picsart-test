@@ -5,7 +5,7 @@ const PEXELS_API_BASE_URL = "https://api.pexels.com/v1";
 const PEXELS_API_KEY = VITE_PEXELS_API_KEY;
 
 export interface IImagesService {
-  getImages(): Promise<{ id: string; url: string }[]>;
+  getImages(page: number): Promise<{ id: string; url: string }[]>;
   getImageById(id: string): Promise<{
     id: string;
     url: string;
@@ -28,9 +28,10 @@ export class ImagesService implements IImagesService {
     return ImagesService.instance;
   }
 
-  async getImages(): Promise<{ id: string; url: string }[]> {
+  async getImages(page: number = 1): Promise<{ id: string; url: string }[]> {
+    const imagesPerPage = 80;
     const query = "nature";
-    const url = `${PEXELS_API_BASE_URL}/search?query=${query}&per_page=80`;
+    const url = `${PEXELS_API_BASE_URL}/search?query=${query}&page=${page}&per_page=${imagesPerPage}`;
 
     const data = await this.fetchFromPexels(url);
 

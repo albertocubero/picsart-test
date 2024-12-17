@@ -9,6 +9,7 @@ describe("ImagesRepository", () => {
   });
 
   it("should return a list of image URLs", async () => {
+    const page = 1;
     const mockImages = [
       {
         id: "12345",
@@ -25,9 +26,10 @@ describe("ImagesRepository", () => {
     };
     const imagesRepository = new ImagesRepository(imagesServiceMock);
 
-    const images = await imagesRepository.getImages();
+    const images = await imagesRepository.getImages(page);
 
     expect(images).toEqual(mockImages);
+    expect(imagesServiceMock.getImages).toHaveBeenCalledWith(page)
   });
 
   it("should return image details for a specific image by ID", async () => {

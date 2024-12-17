@@ -29,6 +29,7 @@ describe("CachedImagesService", () => {
   });
 
   describe("getImages", () => {
+    const page = 1;
     it("should return cached images if data is in localStorage", async () => {
       const cachedImages = [
         {
@@ -43,13 +44,13 @@ describe("CachedImagesService", () => {
 
       mockLocalStorageCache.getFromStorage.mockReturnValueOnce(cachedImages);
 
-      const result = await cachedImagesService.getImages();
+      const result = await cachedImagesService.getImages(page);
 
       expect(result).toEqual(cachedImages);
       expect(mockLocalStorageCache.getFromStorage).toHaveBeenCalledWith(
-        "pexels_images"
+        `pexels_images_${page}`
       );
-      expect(mockImagesService.getImages).not.toHaveBeenCalled();
+      expect(mockImagesService.getImages).not.toHaveBeenCalledWith(page);
     });
 
     it("should fetch and cache images if data is not in localStorage", async () => {
@@ -68,17 +69,17 @@ describe("CachedImagesService", () => {
 
       mockImagesService.getImages.mockResolvedValueOnce(fetchedImages);
 
-      const result = await cachedImagesService.getImages();
+      const result = await cachedImagesService.getImages(page);
 
       expect(result).toEqual(fetchedImages);
       expect(mockLocalStorageCache.getFromStorage).toHaveBeenCalledWith(
-        "pexels_images"
+        `pexels_images_${page}`
       );
       expect(mockLocalStorageCache.saveToStorage).toHaveBeenCalledWith(
-        "pexels_images",
+        `pexels_images_${page}`,
         fetchedImages
       );
-      expect(mockImagesService.getImages).toHaveBeenCalled();
+      expect(mockImagesService.getImages).toHaveBeenCalledWith(page);
     });
   });
 

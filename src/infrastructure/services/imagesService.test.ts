@@ -24,13 +24,14 @@ describe("ImagesService", () => {
 
   describe("getImages", () => {
     it("should return a list of image IDs and URLs from Pexels API", async () => {
+      const page = 1;
       const mockImages = [
         { id: "12345", url: "https://images.pexels.com/photos/12345/pexels-photo-12345.jpeg" },
         { id: "67890", url: "https://images.pexels.com/photos/67890/pexels-photo-67890.jpeg" },
       ];
 
       axiosMock
-        .onGet("https://api.pexels.com/v1/search?query=nature&per_page=80")
+        .onGet(`https://api.pexels.com/v1/search?query=nature&page=${page}&per_page=80`)
         .reply(200, {
           photos: [
             { id: "12345", src: { medium: mockImages[0].url } },
@@ -38,7 +39,7 @@ describe("ImagesService", () => {
           ],
         });
 
-      const images = await imagesService.getImages();
+      const images = await imagesService.getImages(page);
 
       expect(images).toEqual(mockImages);
     });

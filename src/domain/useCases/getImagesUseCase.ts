@@ -1,10 +1,10 @@
-import { imagesRepository, ImagesRepository } from "@/infrastructure/repositories/imagesRepository";
+import { imagesRepository, IImagesRepository } from "@/infrastructure/repositories/imagesRepository";
 
 export class GetImagesUseCase {
   private static instance: GetImagesUseCase;
-  private imagesRepository: ImagesRepository;
+  private imagesRepository: IImagesRepository;
 
-  public constructor(imagesRepository: ImagesRepository) {
+  public constructor(imagesRepository: IImagesRepository) {
     this.imagesRepository = imagesRepository;
   }
 
@@ -15,8 +15,8 @@ export class GetImagesUseCase {
     return GetImagesUseCase.instance;
   }
 
-  async execute(): Promise<{ id: string; url: string }[]> {
-    return this.imagesRepository.getImages();
+  async execute(page: number): Promise<{ id: string; url: string }[]> {
+    return this.imagesRepository.getImages(page);
   }
 }
 

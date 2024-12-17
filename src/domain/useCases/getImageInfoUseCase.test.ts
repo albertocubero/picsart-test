@@ -1,5 +1,5 @@
 import { GetImageInfoUseCase } from "./getImageInfoUseCase";
-import { ImagesRepository } from "@/infrastructure/repositories/imagesRepository";
+import { IImagesRepository } from "@/infrastructure/repositories/imagesRepository";
 
 describe("GetImageInfoUseCase", () => {
   it("should return the same instance ", () => {
@@ -25,7 +25,7 @@ describe("GetImageInfoUseCase", () => {
     };
 
     const getImageInfoUseCase = new GetImageInfoUseCase(
-      imagesRepositoryMock as unknown as ImagesRepository
+      imagesRepositoryMock as unknown as IImagesRepository
     );
 
     const imageDetails = await getImageInfoUseCase.execute(imageId);

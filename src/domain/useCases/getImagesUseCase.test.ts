@@ -1,5 +1,5 @@
 import { GetImagesUseCase } from "./getImagesUseCase";
-import { ImagesRepository } from "@/infrastructure/repositories/imagesRepository";
+import { IImagesRepository } from "@/infrastructure/repositories/imagesRepository";
 
 describe("GetImagesUseCase", () => {
   it("should return the same instance", () => {
@@ -10,6 +10,7 @@ describe("GetImagesUseCase", () => {
   });
 
   it("should return images after calling execute()", async () => {
+    const page = 1;
     const mockImages = [
       {
         id: "12345",
@@ -24,11 +25,12 @@ describe("GetImagesUseCase", () => {
       getImages: jest.fn().mockResolvedValue(mockImages),
     };
     const getImagesUseCase = new GetImagesUseCase(
-      imagesRepositoryMock as unknown as ImagesRepository
+      imagesRepositoryMock as unknown as IImagesRepository
     );
 
-    const images = await getImagesUseCase.execute();
+    const images = await getImagesUseCase.execute(page);
 
     expect(images).toEqual(mockImages);
+    expect(imagesRepositoryMock.getImages).toHaveBeenCalledWith(page);
   });
 });

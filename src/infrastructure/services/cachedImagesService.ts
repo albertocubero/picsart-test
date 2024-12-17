@@ -26,15 +26,15 @@ export class CachedImagesService implements IImagesService{
     return CachedImagesService.instance;
   }
 
-  async getImages(): Promise<{ id: string; url: string }[]> {
-    const cacheKey = `${STORAGE_KEY_PREFIX}_images`;
+  async getImages(page: number): Promise<{ id: string; url: string }[]> {
+    const cacheKey = `${STORAGE_KEY_PREFIX}_images_${page}`;
     const cachedData: any = this.localStorageCache.getFromStorage(cacheKey);
 
     if (cachedData) {
       return cachedData;
     }
 
-    const data = await this.imageService.getImages();
+    const data = await this.imageService.getImages(page);
     this.localStorageCache.saveToStorage(cacheKey, data);
     return data;
   }

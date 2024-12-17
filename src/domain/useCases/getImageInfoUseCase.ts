@@ -1,10 +1,10 @@
-import { imagesRepository, ImagesRepository } from "@/infrastructure/repositories/imagesRepository";
+import { imagesRepository, IImagesRepository } from "@/infrastructure/repositories/imagesRepository";
 
 export class GetImageInfoUseCase {
   private static instance: GetImageInfoUseCase;
-  private imagesRepository: ImagesRepository;
+  private imagesRepository: IImagesRepository;
 
-  public constructor(imagesRepository: ImagesRepository) {
+  public constructor(imagesRepository: IImagesRepository) {
     this.imagesRepository = imagesRepository;
   }
 
