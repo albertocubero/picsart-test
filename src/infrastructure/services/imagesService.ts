@@ -35,9 +35,9 @@ export class ImagesService implements IImagesService {
 
     const data = await this.fetchFromPexels(url);
 
-    return data.photos.map(({ id, src }: { id: string; src: { medium: string } }) => ({
+    return data.photos.map(({ id, src }: { id: string; src: { landscape: string } }) => ({
       id,
-      url: src.medium,
+      url: src.landscape,
     }));
   }
 

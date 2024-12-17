@@ -34,8 +34,8 @@ describe("ImagesService", () => {
         .onGet(`https://api.pexels.com/v1/search?query=nature&page=${page}&per_page=80`)
         .reply(200, {
           photos: [
-            { id: "12345", src: { medium: mockImages[0].url } },
-            { id: "67890", src: { medium: mockImages[1].url } },
+            { id: "12345", src: { landscape: mockImages[0].url } },
+            { id: "67890", src: { landscape: mockImages[1].url } },
           ],
         });
 
@@ -68,7 +68,7 @@ describe("ImagesService", () => {
           src: {
             original: `https://images.pexels.com/photos/${imageId}/pexels-photo-12345.jpeg`,
             large: `https://images.pexels.com/photos/${imageId}/pexels-photo-12345-large.jpeg`,
-            medium: `https://images.pexels.com/photos/${imageId}/pexels-photo-12345-medium.jpeg`,
+            landscape: `https://images.pexels.com/photos/${imageId}/pexels-photo-12345-landscape.jpeg`,
             small: `https://images.pexels.com/photos/${imageId}/pexels-photo-12345-small.jpeg`
           }
         });
