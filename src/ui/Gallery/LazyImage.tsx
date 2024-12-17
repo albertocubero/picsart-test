@@ -1,31 +1,25 @@
 import React, { memo } from "react";
 
 interface LazyImageProps {
-  id: string;
   url: string;
+  height: number;
 }
 
-export const LazyImage: React.FC<LazyImageProps> = memo(({ url, id }) => {
-  return (
-    <div
-      style={{
-        width: "100%",
-        height: "auto",
-        minHeight: "200px",
-        backgroundColor: "#f0f0f0",
-        borderRadius: "8px",
-      }}
-    >
-      <img
-        src={url}
-        alt={`Image ${id}`}
-        loading="lazy"
+export const LazyImage: React.FC<LazyImageProps> = memo(
+  ({ url, height }) => {
+    return (
+      <div
+        data-testid="lazy-image"
         style={{
           width: "100%",
-          height: "auto",
+          height: `${height}px`,
+          backgroundImage: `url(${url})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          marginBottom: "16px",
           borderRadius: "8px",
         }}
       />
-    </div>
-  );
-});
+    );
+  }
+);

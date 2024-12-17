@@ -2,16 +2,20 @@ import { render, screen } from "@testing-library/react";
 import { LazyImage } from "@/ui/Gallery/LazyImage";
 
 describe("LazyImage Component", () => {
-  const mockUrl = "https://via.placeholder.com/150";
-  const mockId = "1";
+  const mockProps = {
+    url: "https://example.com/image.jpg",
+    height: 200,
+  };
 
-  it("should render the image with lazy configuration", () => {
-    render(<LazyImage id={mockId} url={mockUrl} />);
+  it("should render a div with the correct styles", () => {
+    render(<LazyImage url={mockProps.url} height={mockProps.height} />);
 
-    const imgElement = screen.getByRole("img");
+    const lazyImageDiv = screen.getByTestId("lazy-image");
 
-    expect(imgElement).toHaveAttribute("src", mockUrl);
-    expect(imgElement).toHaveAttribute("alt", `Image ${mockId}`);
-    expect(imgElement).toHaveAttribute("loading", "lazy");
+    expect(lazyImageDiv).toBeInTheDocument();
+    expect(lazyImageDiv).toHaveStyle(`
+      height: ${mockProps.height}px;
+      background-image: url(${mockProps.url});
+    `);
   });
 });

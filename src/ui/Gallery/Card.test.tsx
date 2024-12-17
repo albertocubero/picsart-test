@@ -3,29 +3,38 @@ import { renderWithRouter } from "@/test-utils/renderWithRouter";
 import { Card } from "@/ui/Gallery/Card";
 
 jest.mock("@/ui/Gallery/LazyImage", () => ({
-  LazyImage: jest.fn(({ url, id }) => (
-    <img src={url} alt={`Image ${id}`} data-testid="lazy-image" />
+  LazyImage: jest.fn(({ url, height }) => (
+    <img src={url} alt="LazyImage" data-testid="lazy-image" style={{ height: `${height}px` }} />
   )),
 }));
 
-describe("Card component", () => {
-  const id = "123";
-  const url = "https://example.com/image.jpg";
+describe("Card Component", () => {
+  const mockProps = {
+    id: "123",
+    url: "https://example.com/image.jpg",
+    height: 200,
+  };
 
-  it("should render a card with the info to show", () => {
+  it("should render a link with the correct href", () => {
     renderWithRouter({
-      route: `/image/${id}`,
-      children: <Card id={id} url={url} />,
+      route: `/image/${mockProps.id}`,
+      children: <Card id={mockProps.id} url={mockProps.url} height={mockProps.height} />,
     });
 
-    const link = screen.getByRole("link");
-    expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute("href", `/image/${id}`);
-
-    const image = screen.getByTestId("lazy-image");
-    expect(image).toBeInTheDocument();
-    expect(image).toHaveAttribute("src", url);
-    expect(image).toHaveAttribute("alt", `Image ${id}`);
+    const linkElement = screen.getByRole("link");
+    expect(linkElement).toBeInTheDocument();
+    expect(linkElement).toHaveAttribute("href", `/image/${mockProps.id}`);
   });
 
+  it("should render the LazyImage component with the correct props", () => {
+    renderWithRouter({
+      route: `/image/${mockProps.id}`,
+      children: <Card id={mockProps.id} url={mockProps.url} height={mockProps.height} />,
+    });
+
+    const lazyImage = screen.getByTestId("lazy-image");
+    expect(lazyImage).toBeInTheDocument();
+    expect(lazyImage).toHaveAttribute("src", mockProps.url);
+    expect(lazyImage).toHaveStyle(`height: ${mockProps.height}px`);
+  });
 });
