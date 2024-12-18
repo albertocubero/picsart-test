@@ -28,8 +28,21 @@ npm run test
 ```
 
 ### Features
-- **DDD with Hexagonal Architecture:** Uso de Domain-Driven Design (DDD) con Arquitectura Hexagonal para una estructura de código limpia y escalable.
-- **Lazy Loading:** Carga diferida de recursos para mejorar el rendimiento inicial de la aplicación.
-- **Infinite Scroll:** Implementación de scroll infinito para cargar más fotos a medida que el usuario se desplaza.
-- **Testing:** Implementación de pruebas para garantizar la calidad y estabilidad de la aplicación.
-- **Web Vitals Monitoring:** Herramientas integradas para analizar métricas de rendimiento como CLS, FCP, INP, LCP y TTFB para una experiencia de usuario mejorada.
+- **DDD with Hexagonal Architecture:** Use of Domain-Driven Design (DDD) with Hexagonal Architecture for a clean and scalable code structure.
+- **Lazy Loading:** Deferred loading of resources to improve the initial performance of the application  without using an external library.
+- **Infinite Scroll:** Implementation of infinite scroll to load more photos as the user scrolls without using an external library.
+- **Responsiveness:** The application is fully responsive across devices. I created a CSS Reset. Using **styled-components**  without using an external UI Kit.
+- **Error Handling**: Every request show a message when it fails, managing the error properly. 
+- **Testing:** Implementation of tests to ensure the quality and stability of the application. Using **Jest** and **React Testing Library** for testing.
+- **Web Vitals Monitoring:** Integrated tools to analyze performance metrics such as CLS, FCP, INP, LCP, and TTFB for an enhanced user experience.
+
+### How I Ensured the Application's Performance and Any Tools or Techniques I Used
+- **Lazy Loading using IntersectionObserver:** To ensure smooth performance and reduce initial loading time, I used the IntersectionObserver API to lazy-load images only when they are about to enter the viewport. This minimizes the number of images loaded at once and improves overall page load times.
+- **Infinite Scroll:** I implemented infinite scroll by detecting the scroll height of the page applying **requestAnimationFrame** to improve the performance. When the user reaches the bottom, a new page request is triggered to fetch additional images. This allows for a continuous user experience without reloading the page.
+- **Image Size:** Smaller image sizes are used for the gallery and larger sizes for the detailed view, which contributes to smoother scrolling in the gallery.
+
+
+
+
+
+
