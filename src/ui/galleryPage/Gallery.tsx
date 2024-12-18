@@ -61,15 +61,22 @@ const Gallery: React.FC = () => {
   }, [allImages, columnCount]);
 
   useEffect(() => {
-    const onScroll = () => {
-      const container = document.getElementById("gallery-container");
+    let isScrolling = false;
 
-      if (
-        container &&
-        container.scrollHeight - container.scrollTop <= container.clientHeight * 1.3
-      ) {
-        loadMore();
-      }
+    const onScroll = () => {
+      if (isScrolling) return;
+      isScrolling = true;
+
+      requestAnimationFrame(() => {
+        const container = document.getElementById("gallery-container");
+        if (
+          container &&
+          container.scrollHeight - container.scrollTop <= container.clientHeight * 1.3
+        ) {
+          loadMore();
+        }
+        isScrolling = false;
+      });
     };
 
     const container = document.getElementById("gallery-container");
