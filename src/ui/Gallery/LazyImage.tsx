@@ -1,5 +1,6 @@
 import React, { memo, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { Spinner } from "./Spinner";
 
 interface LazyImageWrapperProps {
   isLoaded: boolean;
@@ -21,6 +22,7 @@ const LazyImageWrapper = styled.div
   background-size: cover;
   background-position: center;
   border-radius: 8px;
+  position: relative;
   transition: background-image 0.3s ease;
 `;
 
@@ -30,8 +32,10 @@ interface LazyImageProps {
 }
 
 export const LazyImage: React.FC<LazyImageProps> = memo(({ url, height }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
 
   useEffect(() => {
     const divElement = divRef.current;
@@ -39,7 +43,7 @@ export const LazyImage: React.FC<LazyImageProps> = memo(({ url, height }) => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && divElement) {
-          setIsLoaded(true);
+          setIsVisible(true);
           observer.disconnect();
         }
       },
@@ -59,13 +63,23 @@ export const LazyImage: React.FC<LazyImageProps> = memo(({ url, height }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (imageLoaded) {
+      const img = new Image();
+      img.src = url;
+      img.onload = () => setImageLoaded(true);
+    }
+  }, [imageLoaded, url]);
+
   return (
     <LazyImageWrapper
       data-testid="lazy-image"
       ref={divRef}
-      isLoaded={isLoaded}
+      isLoaded={isVisible}
       height={height}
       url={url}
-    />
+    >
+      {!isVisible && <Spinner containerHeight={`${height}px`} />}
+    </LazyImageWrapper>
   );
 });
