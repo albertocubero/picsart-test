@@ -19,6 +19,7 @@ const GalleryContainer = styled.div`
   gap: 16px;
   overflow-y: auto;
   height: 100vh;
+  padding: 16px;
 `;
 
 const Column = styled.div`
