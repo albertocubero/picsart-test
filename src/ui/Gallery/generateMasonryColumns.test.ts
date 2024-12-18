@@ -1,4 +1,4 @@
-import { generateMasonryColumns, Image } from "@/ui/Gallery/generateMasonryColumns";
+import { generateMasonryColumns, Image, MasonryColumn } from "@/ui/Gallery/generateMasonryColumns";
 
 describe("generateMasonryColumns", () => {
   it("should generate the correct number of columns", () => {
@@ -7,7 +7,9 @@ describe("generateMasonryColumns", () => {
       { id: "2", url: "https://via.placeholder.com/150" },
       { id: "3", url: "https://via.placeholder.com/150" },
     ];
-    const columns = generateMasonryColumns(mockImages, 2);
+    const existingColumns: MasonryColumn[] = [];
+
+    const columns = generateMasonryColumns(existingColumns, mockImages, 2);
 
     expect(columns).toHaveLength(2);
   });
@@ -19,7 +21,9 @@ describe("generateMasonryColumns", () => {
       { id: "3", url: "https://via.placeholder.com/150" },
       { id: "4", url: "https://via.placeholder.com/150" },
     ];
-    const columns = generateMasonryColumns(mockImages, 2);
+    const existingColumns: MasonryColumn[] = [];
+
+    const columns = generateMasonryColumns(existingColumns, mockImages, 2);
 
     const totalImages = columns.reduce(
       (acc, column) => acc + column.images.length,
@@ -37,7 +41,9 @@ describe("generateMasonryColumns", () => {
       { id: "1", url: "https://via.placeholder.com/150" },
       { id: "2", url: "https://via.placeholder.com/150", height: 200 },
     ];
-    const columns = generateMasonryColumns(mockImages, 2);
+    const existingColumns: MasonryColumn[] = [];
+
+    const columns = generateMasonryColumns(existingColumns, mockImages, 2);
 
     const imageWithRandomHeight = columns[0].images.find(
       (img) => img.id === "1"
@@ -58,8 +64,9 @@ describe("generateMasonryColumns", () => {
       { id: "3", url: "https://via.placeholder.com/150", height: 100 },
       { id: "4", url: "https://via.placeholder.com/150", height: 250 },
     ];
+    const existingColumns: MasonryColumn[] = [];
 
-    const columns = generateMasonryColumns(mockImages, 2);
+    const columns = generateMasonryColumns(existingColumns, mockImages, 2);
 
     const totalHeights = columns.map((column) => column.totalHeight);
 
@@ -68,7 +75,9 @@ describe("generateMasonryColumns", () => {
   });
 
   it("should return an empty array when no images are provided", () => {
-    const columns = generateMasonryColumns([], 3);
+    const existingColumns: MasonryColumn[] = [];
+
+    const columns = generateMasonryColumns(existingColumns, [], 3);
 
     expect(columns).toHaveLength(3);
     columns.forEach((column) => {
@@ -82,8 +91,9 @@ describe("generateMasonryColumns", () => {
       { id: "1", url: "https://via.placeholder.com/150", height: 200 },
       { id: "2", url: "https://via.placeholder.com/150", height: 150 },
     ];
+    const existingColumns: MasonryColumn[] = [];
 
-    const columns = generateMasonryColumns(mockImages, 1);
+    const columns = generateMasonryColumns(existingColumns, mockImages, 1);
 
     expect(columns).toHaveLength(1);
     expect(columns[0].images).toHaveLength(mockImages.length);

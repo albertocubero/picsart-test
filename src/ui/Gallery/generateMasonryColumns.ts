@@ -10,22 +10,16 @@ export interface MasonryColumn {
   totalHeight: number;
 }
 
-const getRandomHeight = () => Math.floor(Math.random() * (300 - 150) + 150);
-
 export const generateMasonryColumns = (
-  images: Image[],
+  existingColumns: MasonryColumn[],
+  newImages: Image[],
   columnCount: number
 ): MasonryColumn[] => {
-  const columns: MasonryColumn[] = Array.from(
-    { length: columnCount },
-    (_, i) => ({
-      id: i,
-      images: [],
-      totalHeight: 0,
-    })
+  const columns = Array.from({ length: columnCount }, (_, i) => 
+    existingColumns[i] || { id: i, images: [], totalHeight: 0 }
   );
 
-  images.forEach((image) => {
+  newImages.forEach((image) => {
     const height = image.height || getRandomHeight();
 
     const targetColumn = columns.reduce((prev, curr) =>
@@ -38,3 +32,5 @@ export const generateMasonryColumns = (
 
   return columns;
 };
+
+const getRandomHeight = () => Math.floor(Math.random() * (300 - 150) + 150);
