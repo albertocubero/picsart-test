@@ -1,4 +1,29 @@
 import React, { memo, useEffect, useRef, useState } from "react";
+import styled from "styled-components";
+
+interface LazyImageWrapperProps {
+  isLoaded: boolean;
+  height: number;
+  url: string;
+}
+
+const LazyImageWrapper = styled.div
+  .withConfig({
+    shouldForwardProp: (prop) => prop !== "isLoaded",
+  })
+  .attrs<LazyImageWrapperProps>(({ isLoaded, url, height }) => ({
+    style: {
+      backgroundImage: isLoaded ? `url(${url})` : "none",
+      height: `${height}px`,
+    },
+  }))`
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  transition: background-image 0.3s ease;
+`;
 
 interface LazyImageProps {
   url: string;
@@ -36,19 +61,12 @@ export const LazyImage: React.FC<LazyImageProps> = memo(({ url, height }) => {
   }, []);
 
   return (
-    <div
+    <LazyImageWrapper
       data-testid="lazy-image"
       ref={divRef}
-      style={{
-        width: "100%",
-        height: `${height}px`,
-        backgroundImage: isLoaded ? `url(${url})` : "none",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        marginBottom: "16px",
-        borderRadius: "8px",
-        transition: "background-image 0.3s ease",
-      }}
+      isLoaded={isLoaded}
+      height={height}
+      url={url}
     />
   );
 });
