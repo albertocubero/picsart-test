@@ -1,19 +1,19 @@
 import React from "react";
+import styled from "styled-components";
+
+const ErrorMessageWrapper = styled.p`
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  color: white;
+  background-color: red;
+  padding: 8px;
+`;
 
 export const ErrorMessage: React.FC = () => (
-  <p
-    data-testid="error-message"
-    style={{
-      position: "fixed",
-      top: "0",
-      left: "50%",
-      transform: "translateX(-50%)",
-      fontSize: "16px",
-      color: "white",
-      backgroundColor: "red",
-      padding: "8px",
-    }}
-  >
+  <ErrorMessageWrapper data-testid="error-message">
     Error loading images. Please try again.
-  </p>
+  </ErrorMessageWrapper>
 );
