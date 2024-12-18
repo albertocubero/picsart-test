@@ -1,36 +1,44 @@
 import { screen, waitFor } from "@testing-library/react";
-import { Route, Routes } from "react-router-dom";
 import { renderWithRouter } from "@/test-utils/renderWithRouter";
-import DetailPage from "@/ui/detailPage/DetailPage";
+import DetailPage from "./DetailPage";
 import useGetImageInfo from "@/ui/hooks/useGetImageInfo";
+import { Route, Routes } from "react-router-dom";
 
 jest.mock("@/ui/hooks/useGetImageInfo", () => ({
   __esModule: true,
   default: jest.fn(),
 }));
 
+jest.mock("@/ui/detailPage/DetailPageHeader", () => ({
+  __esModule: true,
+  default: () => <div>Header</div>,
+}));
+
+jest.mock("@/ui/detailPage/ImageDetailsContainer", () => ({
+  __esModule: true,
+  default: ({ imageInfo }: { imageInfo: { id: string } }) => <div>{imageInfo.id}</div>,
+}));
+
+jest.mock("@/ui/detailPage/LoadingText", () => ({
+  __esModule: true,
+  default: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+}));
+
 describe("DetailPage", () => {
-  it("should render 'Image ID is required' when no id is provided", () => {
+
+  const mockImageInfo = {
+    id: "12345",
+    photographer: "John Doe",
+    photographer_url: "https://example.com",
+    alt: "A beautiful landscape",
+    src: "https://example.com/image.jpg",
+  };
+  
+  test("shows loading text while fetching data", async () => {
+    (useGetImageInfo as jest.Mock).mockReturnValue({ imageInfo: null, isLoading: true });
+    
     renderWithRouter({
-      route: "/image-detail",
-      children: (
-        <Routes>
-          <Route path="/image-detail" element={<DetailPage />} />
-        </Routes>
-      ),
-    });
-
-    expect(screen.getByText("Image ID is required")).toBeInTheDocument();
-  });
-
-  it("should display loading message while fetching image info", () => {
-    (useGetImageInfo as jest.Mock).mockReturnValue({
-      imageInfo: null,
-      isLoading: true,
-    });
-
-    renderWithRouter({
-      route: "/image/123",
+      route: "/image/1",
       children: (
         <Routes>
           <Route path="/image/:id" element={<DetailPage />} />
@@ -38,54 +46,48 @@ describe("DetailPage", () => {
       ),
     });
 
-    expect(screen.getByText("Loading...")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText("Loading...")).toBeInTheDocument();
+    });
   });
 
-  it("should display 'Image not found' when imageInfo is not available", () => {
-    (useGetImageInfo as jest.Mock).mockReturnValue({
-      imageInfo: null,
-      isLoading: false,
-    });
-
+  test("shows error message if no image found", () => {
+    (useGetImageInfo as jest.Mock).mockReturnValue({ imageInfo: null, isLoading: false });
     renderWithRouter({
-      route: "/image/123",
+      route: "/image/1",
       children: (
         <Routes>
           <Route path="/image/:id" element={<DetailPage />} />
         </Routes>
       ),
     });
-
     expect(screen.getByText("Image not found")).toBeInTheDocument();
   });
 
-  it("should display image details when imageInfo is available", async () => {
-    const mockImageInfo = {
-      id: "123",
-      photographer: "John Doe",
-      photographer_url: "https://www.pexels.com/@johndoe",
-      alt: "A beautiful sunset",
-      src: "https://images.pexels.com/photos/123/pexels-photo.jpeg",
-    };
-
-    (useGetImageInfo as jest.Mock).mockReturnValue({
-      imageInfo: mockImageInfo,
-      isLoading: false,
-    });
-
+  test("shows image details when data is fetched", async () => {
+    (useGetImageInfo as jest.Mock).mockReturnValue({ imageInfo: mockImageInfo, isLoading: false });
     renderWithRouter({
-      route: "/image/123",
+      route: "/image/1",
       children: (
         <Routes>
           <Route path="/image/:id" element={<DetailPage />} />
         </Routes>
       ),
     });
+    await waitFor(() => {
+      expect(screen.getByText(mockImageInfo.id)).toBeInTheDocument();
+    });
+  });
 
-    await waitFor(() => expect(screen.getByText("Image ID: 123")).toBeInTheDocument());
-    expect(screen.getByText("Photographer: John Doe")).toBeInTheDocument();
-    expect(screen.getByText("View photographer's profile")).toBeInTheDocument();
-    expect(screen.getByAltText("A beautiful sunset")).toBeInTheDocument();
-    expect(screen.getByRole("img")).toHaveAttribute("src", mockImageInfo.src);
+  test("shows 'Image ID is required' if no id in params", () => {
+    renderWithRouter({
+      route: "/image/",
+      children: (
+        <Routes>
+          <Route path="/image/" element={<DetailPage />} />
+        </Routes>
+      ),
+    });
+    expect(screen.getByText("Image ID is required")).toBeInTheDocument();
   });
 });

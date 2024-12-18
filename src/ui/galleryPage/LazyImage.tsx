@@ -4,7 +4,7 @@ import { Spinner } from "./Spinner";
 
 interface LazyImageWrapperProps {
   isLoaded: boolean;
-  height: number;
+  height: number | '100vh';
   url: string;
 }
 
@@ -15,7 +15,7 @@ const LazyImageWrapper = styled.div
   .attrs<LazyImageWrapperProps>(({ isLoaded, url, height }) => ({
     style: {
       backgroundImage: isLoaded ? `url(${url})` : "none",
-      height: `${height}px`,
+      height: height === '100vh' ? height : `${height}px`,
     },
   }))`
   width: 100%;
@@ -28,14 +28,13 @@ const LazyImageWrapper = styled.div
 
 interface LazyImageProps {
   url: string;
-  height: number;
+  height: number | '100vh';
 }
 
 export const LazyImage: React.FC<LazyImageProps> = memo(({ url, height }) => {
   const [isVisible, setIsVisible] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
-
 
   useEffect(() => {
     const divElement = divRef.current;
@@ -64,12 +63,12 @@ export const LazyImage: React.FC<LazyImageProps> = memo(({ url, height }) => {
   }, []);
 
   useEffect(() => {
-    if (imageLoaded) {
+    if (isVisible && !imageLoaded) {
       const img = new Image();
       img.src = url;
       img.onload = () => setImageLoaded(true);
     }
-  }, [imageLoaded, url]);
+  }, [isVisible, imageLoaded, url]);
 
   return (
     <LazyImageWrapper
@@ -79,7 +78,7 @@ export const LazyImage: React.FC<LazyImageProps> = memo(({ url, height }) => {
       height={height}
       url={url}
     >
-      {!isVisible && <Spinner containerHeight={`${height}px`} />}
+      {!isVisible && <Spinner containerHeight={height === '100vh' ? '100vh' : `${height}px`} />}
     </LazyImageWrapper>
   );
 });
