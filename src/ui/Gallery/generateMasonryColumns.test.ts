@@ -63,7 +63,6 @@ describe("generateMasonryColumns", () => {
 
     const totalHeights = columns.map((column) => column.totalHeight);
 
-    // Verificar que la diferencia entre alturas sea pequeña (<= 150)
     const heightDifference = Math.abs(totalHeights[0] - totalHeights[1]);
     expect(heightDifference).toBeLessThanOrEqual(200);
   });

@@ -20,7 +20,6 @@ const LazyImageWrapper = styled.div
   width: 100%;
   background-size: cover;
   background-position: center;
-  margin-bottom: 16px;
   border-radius: 8px;
   transition: background-image 0.3s ease;
 `;
