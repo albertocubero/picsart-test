@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { LazyImage } from "@/ui/galleryPage/LazyImage";
 
 interface CardProps {
-  id: string;
+  id: number;
   url: string;
   height: number;
 }

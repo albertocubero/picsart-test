@@ -34,12 +34,12 @@ describe("CachedImagesService", () => {
     it("should return cached images if data is in localStorage", async () => {
       const cachedImages: IImage[] = [
         {
-          id: "12345",
+          id: 12345,
           url: "https://images.pexels.com/photos/12345/pexels-photo-12345.jpeg",
           height: 150
         },
         {
-          id: "67890",
+          id: 67890,
           url: "https://images.pexels.com/photos/67890/pexels-photo-67890.jpeg",
           height: 150
         },
@@ -59,12 +59,12 @@ describe("CachedImagesService", () => {
     it("should fetch and cache images if data is not in localStorage", async () => {
       const fetchedImages: IImage[] = [
         {
-          id: "12345",
+          id: 12345,
           url: "https://images.pexels.com/photos/12345/pexels-photo-12345.jpeg",
           height: 150
         },
         {
-          id: "67890",
+          id: 67890,
           url: "https://images.pexels.com/photos/67890/pexels-photo-67890.jpeg",
           height: 150
         },

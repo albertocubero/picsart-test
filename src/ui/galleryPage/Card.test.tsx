@@ -10,7 +10,7 @@ jest.mock("@/ui/GalleryPage/LazyImage", () => ({
 
 describe("Card Component", () => {
   const mockProps = {
-    id: "123",
+    id: 123,
     url: "https://example.com/image.jpg",
     height: 200,
   };
