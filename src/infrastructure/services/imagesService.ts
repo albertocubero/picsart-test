@@ -54,7 +54,7 @@ export class ImagesService implements IImagesService {
       photographer: data.photographer,
       photographer_url: data.photographer_url,
       alt: data.alt,
-      src: data.src.original,
+      src: data.src.portrait,
     };
   }
 

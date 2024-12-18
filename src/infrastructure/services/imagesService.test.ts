@@ -48,20 +48,12 @@ describe("ImagesService", () => {
   describe("getImageById", () => {
     it("should return all image data for a specific image by ID", async () => {
       const imageId = '12345';
-      const mockImageData = {
-        id: imageId,
-        url: `https://images.pexels.com/photos/${imageId}/pexels-photo-${imageId}.jpeg`,
-        photographer: "John Doe",
-        photographer_url: "https://www.pexels.com/@johndoe",
-        alt: "A beautiful sunset over the ocean",
-        src: `https://images.pexels.com/photos/${imageId}/pexels-photo-12345.jpeg`,
-      };
 
       axiosMock
         .onGet(`https://api.pexels.com/v1/photos/${imageId}`)
         .reply(200, {
           id: imageId,
-          url: `https://images.pexels.com/photos/${imageId}/pexels-photo-${imageId}.jpeg`,
+          url: `https://pexels.com/photos/${imageId}/pexels-photo-${imageId}`,
           photographer: "John Doe",
           photographer_url: "https://www.pexels.com/@johndoe",
           alt: "A beautiful sunset over the ocean",
@@ -69,13 +61,20 @@ describe("ImagesService", () => {
             original: `https://images.pexels.com/photos/${imageId}/pexels-photo-12345.jpeg`,
             large: `https://images.pexels.com/photos/${imageId}/pexels-photo-12345-large.jpeg`,
             landscape: `https://images.pexels.com/photos/${imageId}/pexels-photo-12345-landscape.jpeg`,
-            small: `https://images.pexels.com/photos/${imageId}/pexels-photo-12345-small.jpeg`
+            portrait: `https://images.pexels.com/photos/${imageId}/pexels-photo-12345-portrait.jpeg`
           }
         });
 
       const image = await imagesService.getImageById(imageId);
 
-      expect(image).toEqual(mockImageData);
+      expect(image).toEqual({
+        id: imageId,
+        url: `https://pexels.com/photos/${imageId}/pexels-photo-${imageId}`,
+        photographer: "John Doe",
+        photographer_url: "https://www.pexels.com/@johndoe",
+        alt: "A beautiful sunset over the ocean",
+        src: `https://images.pexels.com/photos/${imageId}/pexels-photo-${imageId}-portrait.jpeg`,
+      });
     });
   });
 });
