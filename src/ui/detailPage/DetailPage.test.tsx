@@ -34,7 +34,7 @@ describe("DetailPage", () => {
     src: "https://example.com/image.jpg",
   };
   
-  test("shows loading text while fetching data", async () => {
+  it("shows loading text while fetching data", async () => {
     (useGetImageInfo as jest.Mock).mockReturnValue({ imageInfo: null, isLoading: true });
     
     renderWithRouter({
@@ -51,7 +51,7 @@ describe("DetailPage", () => {
     });
   });
 
-  test("shows error message if no image found", () => {
+  it("shows error message if no image found", () => {
     (useGetImageInfo as jest.Mock).mockReturnValue({ imageInfo: null, isLoading: false });
     renderWithRouter({
       route: "/image/1",
@@ -64,7 +64,7 @@ describe("DetailPage", () => {
     expect(screen.getByText("Image not found")).toBeInTheDocument();
   });
 
-  test("shows image details when data is fetched", async () => {
+  it("shows image details when data is fetched", async () => {
     (useGetImageInfo as jest.Mock).mockReturnValue({ imageInfo: mockImageInfo, isLoading: false });
     renderWithRouter({
       route: "/image/1",
@@ -79,7 +79,7 @@ describe("DetailPage", () => {
     });
   });
 
-  test("shows 'Image ID is required' if no id in params", () => {
+  it("shows 'Image ID is required' if no id in params", () => {
     renderWithRouter({
       route: "/image/",
       children: (

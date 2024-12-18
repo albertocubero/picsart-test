@@ -7,7 +7,7 @@ jest.mock("@/ui/detailPage/ButtonBack", () => ({
 }));
 
 describe("DetailPageHeader", () => {
-  test("renders Header with title and Back button", () => {
+  it("renders Header with title and Back button", () => {
     render(<DetailPageHeader />);
 
     expect(screen.getByText("Back Button")).toBeInTheDocument();
