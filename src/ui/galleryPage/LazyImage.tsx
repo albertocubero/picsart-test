@@ -32,10 +32,10 @@ interface LazyImageProps {
 }
 
 export const LazyImage: React.FC<LazyImageProps> = memo(({ url, height }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
   const divRef = useRef<HTMLDivElement>(null);
-  const [imageLoaded, setImageLoaded] = useState(false);
-
+  
   useEffect(() => {
     const divElement = divRef.current;
 

@@ -1,11 +1,12 @@
-import { generateMasonryColumns, Image } from "@/ui/galleryPage/generateMasonryColumns";
+import { IImage } from "@/domain/interfaces/IImage";
+import { generateMasonryColumns } from "@/ui/galleryPage/generateMasonryColumns";
 
 describe("generateMasonryColumns", () => {
   it("should generate the correct number of columns", () => {
-    const mockImages: Image[] = [
-      { id: "1", url: "https://via.placeholder.com/150" },
-      { id: "2", url: "https://via.placeholder.com/150" },
-      { id: "3", url: "https://via.placeholder.com/150" },
+    const mockImages: IImage[] = [
+      { id: "1", url: "https://via.placeholder.com/150", height: 200 },
+      { id: "2", url: "https://via.placeholder.com/150", height: 200 },
+      { id: "3", url: "https://via.placeholder.com/150", height: 200 },
     ];
     const columns = generateMasonryColumns(mockImages, 2);
 
@@ -13,11 +14,11 @@ describe("generateMasonryColumns", () => {
   });
 
   it("should distribute images across columns", () => {
-    const mockImages: Image[] = [
-      { id: "1", url: "https://via.placeholder.com/150" },
-      { id: "2", url: "https://via.placeholder.com/150" },
-      { id: "3", url: "https://via.placeholder.com/150" },
-      { id: "4", url: "https://via.placeholder.com/150" },
+    const mockImages: IImage[] = [
+      { id: "1", url: "https://via.placeholder.com/150", height: 200},
+      { id: "2", url: "https://via.placeholder.com/150", height: 200 },
+      { id: "3", url: "https://via.placeholder.com/150", height: 200 },
+      { id: "4", url: "https://via.placeholder.com/150", height: 200 },
     ];
     const columns = generateMasonryColumns(mockImages, 2);
 
@@ -33,8 +34,8 @@ describe("generateMasonryColumns", () => {
   });
 
   it("should assign a random height to images that don't have one", () => {
-    const mockImages: Image[] = [
-      { id: "1", url: "https://via.placeholder.com/150" },
+    const mockImages: IImage[] = [
+      { id: "1", url: "https://via.placeholder.com/150", height: 200 },
       { id: "2", url: "https://via.placeholder.com/150", height: 200 },
     ];
     const columns = generateMasonryColumns(mockImages, 2);
@@ -52,7 +53,7 @@ describe("generateMasonryColumns", () => {
   });
 
   it("should balance the total height of columns", () => {
-    const mockImages: Image[] = [
+    const mockImages: IImage[] = [
       { id: "1", url: "https://via.placeholder.com/150", height: 200 },
       { id: "2", url: "https://via.placeholder.com/150", height: 150 },
       { id: "3", url: "https://via.placeholder.com/150", height: 100 },
@@ -78,7 +79,7 @@ describe("generateMasonryColumns", () => {
   });
 
   it("should handle a single column gracefully", () => {
-    const mockImages: Image[] = [
+    const mockImages: IImage[] = [
       { id: "1", url: "https://via.placeholder.com/150", height: 200 },
       { id: "2", url: "https://via.placeholder.com/150", height: 150 },
     ];

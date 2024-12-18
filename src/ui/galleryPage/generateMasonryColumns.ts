@@ -1,22 +1,18 @@
-export interface Image {
-  id: string;
-  url: string;
-  height?: number;
-}
+import { IImage } from "@/domain/interfaces/IImage";
 
-export interface MasonryColumn {
+export interface IMasonryColumn {
   id: number;
-  images: Image[];
+  images: IImage[];
   totalHeight: number;
 }
 
 const getRandomHeight = () => Math.floor(Math.random() * (300 - 150) + 150);
 
 export const generateMasonryColumns = (
-  images: Image[],
+  images: IImage[],
   columnCount: number
-): MasonryColumn[] => {
-  const columns: MasonryColumn[] = Array.from(
+): IMasonryColumn[] => {
+  const columns: IMasonryColumn[] = Array.from(
     { length: columnCount },
     (_, i) => ({
       id: i,

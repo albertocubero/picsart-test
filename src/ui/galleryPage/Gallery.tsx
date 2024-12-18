@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback, memo } from "react";
 import styled from "styled-components";
 import useGetImages from "@/ui/hooks/useGetImages";
-import { generateMasonryColumns, Image, MasonryColumn } from "./generateMasonryColumns";
+import { generateMasonryColumns, IMasonryColumn } from "./generateMasonryColumns";
 import { Card } from "./Card";
 import { ErrorMessage } from "./ErrorMessage";
 import { LoadingMessage } from "./LoadingMessage";
+import { IImage } from "@/domain/interfaces/IImage";
 
 const getColumnCount = (width: number): number => {
   if (width <= 768) return 1;
@@ -28,10 +29,10 @@ const Column = styled.div`
 
 const Gallery: React.FC = () => {
   const [page, setPage] = useState<number>(1);
-  const [allImages, setAllImages] = useState<Image[]>([]);
-  const [columns, setColumns] = useState<MasonryColumn[]>([]);
+  const [allImages, setAllImages] = useState<IImage[]>([]);
+  const [columns, setColumns] = useState<IMasonryColumn[]>([]);
   const [columnCount, setColumnCount] = useState<number>(getColumnCount(window.innerWidth));
-  const [isFetching, setIsFetching] = useState(false);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   const { images, isLoading, isError } = useGetImages(page);
 

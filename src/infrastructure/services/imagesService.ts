@@ -23,7 +23,7 @@ export class ImagesService implements IImagesService {
     return ImagesService.instance;
   }
 
-  async getImages(page: number = 1): Promise<{ id: string; url: string }[]> {
+  async getImages(page: number = 1): Promise<IImage[]> {
     const imagesPerPage = 80;
     const query = "nature";
     const url = `${PEXELS_API_BASE_URL}/search?query=${query}&page=${page}&per_page=${imagesPerPage}`;

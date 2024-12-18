@@ -1,4 +1,4 @@
-import { renderHook, waitFor, act } from "@testing-library/react";
+import { renderHook, waitFor } from "@testing-library/react";
 import useGetImageInfo from "./useGetImageInfo";
 import { getImageInfoUseCase } from "@/domain/useCases/getImageInfoUseCase";
 
@@ -9,19 +9,23 @@ jest.mock("@/domain/useCases/getImageInfoUseCase", () => ({
 }));
 
 describe("useGetImageInfo", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("should initially be loading", async () => {
     const { result } = renderHook(() => useGetImageInfo("12345"));
 
-    await act(async () => {
-      expect(result.current.isLoading).toBe(true);
-      expect(result.current.imageInfo).toBeNull();
-    });
+    await waitFor(() => expect(result.current.isLoading).toBe(true));
+    
+    expect(result.current.imageInfo).toBeUndefined();
   });
 
   it("should return image details after the fetch is complete", async () => {
+    const imageId = "12345";
     const mockImageInfo = {
-      id: "12345",
-      url: "https://www.pexels.com/photo/12345",
+      id: imageId,
+      url: `https://images.pexels.com/photos/${imageId}/pexels-photo-${imageId}.jpeg`,
       photographer: "John Doe",
       photographer_url: "https://www.pexels.com/@johndoe",
       alt: "A beautiful sunset over the ocean",
@@ -41,4 +45,17 @@ describe("useGetImageInfo", () => {
     });
   });
 
+  it("should handle errors if the fetch fails", async () => {
+    (getImageInfoUseCase.execute as jest.Mock).mockRejectedValue(new Error("Failed to fetch"));
+
+    const { result } = renderHook(() => useGetImageInfo("12345"));
+
+    expect(result.current.isLoading).toBe(true);
+    expect(result.current.imageInfo).toBeNull();
+
+    await waitFor(() => {
+      expect(result.current.isLoading).toBe(false);
+      expect(result.current.isError).toBe(true);
+    });
+  });
 });

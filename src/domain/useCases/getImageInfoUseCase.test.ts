@@ -13,7 +13,7 @@ describe("GetImageInfoUseCase", () => {
     const imageId = "12345";
     const mockImageDetails = {
       id: imageId,
-      url: `https://www.pexels.com/photo/${imageId}`,
+      url: `https://images.pexels.com/photos/${imageId}/pexels-photo-${imageId}.jpeg`,
       photographer: "John Doe",
       photographer_url: "https://www.pexels.com/@johndoe",
       alt: "A beautiful sunset over the ocean",

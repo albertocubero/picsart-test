@@ -1,28 +1,24 @@
 import { useState, useEffect } from "react";
 import { getImagesUseCase } from "@/domain/useCases/getImagesUseCase";
+import { IImage } from "@/domain/interfaces/IImage";
 
 export interface UseGetImagesResult {
-  images: Image[];
+  images: IImage[];
   isLoading: boolean;
   isError: boolean;
 }
 
-interface Image {
-  id: string;
-  url: string;
-}
-
 const useGetImages = (page: number = 1): UseGetImagesResult => {
-  const [images, setImages] = useState<Image[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const [images, setImages] = useState<IImage[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchImages = async () => {
       try {
         setIsLoading(true);
         setIsError(false);
-        const fetchedImages = await getImagesUseCase.execute(page);
+        const fetchedImages: IImage[] = await getImagesUseCase.execute(page);
         setImages(fetchedImages);
       } catch (error) {
         setIsError(true);
