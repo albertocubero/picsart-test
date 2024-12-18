@@ -50,7 +50,10 @@ const Gallery: React.FC = () => {
 
   useEffect(() => {
     if (images.length > 0) {
-      setAllImages((prevImages) => [...prevImages, ...images]);
+      setAllImages((prevImages) => {
+        const newImages = images.filter(image => !prevImages.some(img => img.id === image.id));
+        return [...prevImages, ...newImages];
+      });
     }
   }, [images]);
 

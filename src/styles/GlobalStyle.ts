@@ -8,11 +8,11 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: Arial, sans-serif;  // O cualquier fuente que prefieras
-    background-color: #f0f0f0;      // Color de fondo deseado
-    color: #333;                    // Color del texto
-    line-height: 1.5;                // Altura de línea para una mejor legibilidad
-    font-size: 16px;                 // Tamaño de fuente base
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    line-height: 1.5;
+    font-size: 16px;
   }
 
   h1, h2, h3, h4, h5, h6 {
