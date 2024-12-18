@@ -17,15 +17,15 @@ const Gallery: React.FC = () => {
   const [columns, setColumns] = useState<MasonryColumn[]>([]);
   const [columnCount, setColumnCount] = useState<number>(getColumnCount(window.innerWidth));
   const [isFetching, setIsFetching] = useState(false);
-  
-  const { images, isLoading } = useGetImages(page);
+
+  const { images, isLoading, isError } = useGetImages(page);
 
   const loadMore = useCallback(() => {
-    if (!isFetching && !isLoading) {
+    if (!isFetching && !isLoading && !isError) {
       setIsFetching(true);
       setPage((prevPage) => prevPage + 1);
     }
-  }, [isFetching, isLoading]);
+  }, [isFetching, isLoading, isError]);
 
   useEffect(() => {
     if (page > 1) {
@@ -47,7 +47,6 @@ const Gallery: React.FC = () => {
   useEffect(() => {
     const onScroll = () => {
       const container = document.getElementById("gallery-container");
-
 
       if (
         container &&
@@ -83,6 +82,23 @@ const Gallery: React.FC = () => {
         height: "100vh",
       }}
     >
+      {isError && (
+        <p
+          data-testid="error-message"
+          style={{
+            position: "fixed",
+            top: "0",
+            left: "50%",
+            transform: "translateX(-50%)",
+            fontSize: "16px",
+            color: "white",
+            backgroundColor: "red",
+            padding: "8px",
+          }}
+        >
+          Error loading images. Please try again.
+        </p>
+      )}
       {columns.map((column) => (
         <div key={column.id} style={{ flex: 1 }} data-testid="column">
           {column.images.map(({ id, url, height = 200 }) => (

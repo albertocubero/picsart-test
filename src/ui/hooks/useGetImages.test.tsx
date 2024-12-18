@@ -14,6 +14,7 @@ describe("useGetImages", () => {
 
     await act(async () => {
       expect(result.current.isLoading).toBe(true);
+      expect(result.current.isError).toBe(false);
       expect(result.current.images).toEqual([]);
     });
   });
@@ -35,12 +36,30 @@ describe("useGetImages", () => {
     const { result } = renderHook(() => useGetImages());
 
     expect(result.current.isLoading).toBe(true);
+    expect(result.current.isError).toBe(false);
     expect(result.current.images).toEqual([]);
 
     await waitFor(() => {
       expect(result.current.isLoading).toBe(false);
+      expect(result.current.isError).toBe(false);
       expect(result.current.images).toEqual(mockImages);
     });
   });
 
+  it("should set isError to true when fetch fails", async () => {
+    const mockError = new Error("Failed to fetch images");
+    (getImagesUseCase.execute as jest.Mock).mockRejectedValue(mockError);
+
+    const { result } = renderHook(() => useGetImages());
+
+    expect(result.current.isLoading).toBe(true);
+    expect(result.current.isError).toBe(false);
+    expect(result.current.images).toEqual([]);
+
+    await waitFor(() => {
+      expect(result.current.isLoading).toBe(false);
+      expect(result.current.isError).toBe(true);
+      expect(result.current.images).toEqual([]);
+    });
+  });
 });

@@ -17,6 +17,7 @@ describe("Gallery Component", () => {
     (useGetImages as jest.Mock).mockReturnValue({
       images: [],
       isLoading: true,
+      isError: false
     });
 
     renderWithRouter({
@@ -40,6 +41,7 @@ describe("Gallery Component", () => {
     (useGetImages as jest.Mock).mockReturnValue({
       images: mockImages,
       isLoading: false,
+      isError: false
     });
 
     renderWithRouter({
@@ -72,6 +74,7 @@ describe("Gallery Component", () => {
       return {
         images: currentPage === 1 ? initialImages : newImages,
         isLoading: false,
+        isError: false
       };
     });
 
@@ -110,6 +113,7 @@ describe("Gallery Component", () => {
     (useGetImages as jest.Mock).mockReturnValue({
       images: [],
       isLoading: false,
+      isError: false
     });
 
     renderWithRouter({
@@ -154,6 +158,7 @@ describe("Gallery Component", () => {
     (useGetImages as jest.Mock).mockReturnValue({
       images: mockImages,
       isLoading: false,
+      isError: false
     });
 
     renderWithRouter({
@@ -172,5 +177,26 @@ describe("Gallery Component", () => {
     });
 
     expect(loadMoreSpy).not.toHaveBeenCalledTimes(2);
+  });
+
+  it("should display a error message when images are loading", () => {
+    (useGetImages as jest.Mock).mockReturnValue({
+      images: [],
+      isLoading: false,
+      isError: true
+    });
+
+    renderWithRouter({
+      route: "/",
+      children: (
+        <Routes>
+          <Route path="/" element={<Gallery />} />
+        </Routes>
+      ),
+    });
+
+    const errorMessage = screen.getByTestId("error-message");
+    expect(errorMessage).toBeInTheDocument();
+    expect(errorMessage).toHaveTextContent("Error loading images. Please try again.");
   });
 });
