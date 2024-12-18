@@ -1,6 +1,6 @@
 
 import { render, screen } from "@testing-library/react";
-import { Spinner } from "@/ui/Gallery/Spinner";
+import { Spinner } from "@/ui/galleryPage/Spinner";
 
 describe("Spinner Component", () => {
   it("should render the spinner", () => {

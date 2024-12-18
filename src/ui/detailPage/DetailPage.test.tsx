@@ -1,7 +1,7 @@
 import { screen, waitFor } from "@testing-library/react";
 import { Route, Routes } from "react-router-dom";
 import { renderWithRouter } from "@/test-utils/renderWithRouter";
-import ImageDetail from "@/ui/ImageDetail/ImageDetail";
+import DetailPage from "@/ui/detailPage/DetailPage";
 import useGetImageInfo from "@/ui/hooks/useGetImageInfo";
 
 jest.mock("@/ui/hooks/useGetImageInfo", () => ({
@@ -9,13 +9,13 @@ jest.mock("@/ui/hooks/useGetImageInfo", () => ({
   default: jest.fn(),
 }));
 
-describe("ImageDetail", () => {
+describe("DetailPage", () => {
   it("should render 'Image ID is required' when no id is provided", () => {
     renderWithRouter({
       route: "/image-detail",
       children: (
         <Routes>
-          <Route path="/image-detail" element={<ImageDetail />} />
+          <Route path="/image-detail" element={<DetailPage />} />
         </Routes>
       ),
     });
@@ -33,7 +33,7 @@ describe("ImageDetail", () => {
       route: "/image/123",
       children: (
         <Routes>
-          <Route path="/image/:id" element={<ImageDetail />} />
+          <Route path="/image/:id" element={<DetailPage />} />
         </Routes>
       ),
     });
@@ -51,7 +51,7 @@ describe("ImageDetail", () => {
       route: "/image/123",
       children: (
         <Routes>
-          <Route path="/image/:id" element={<ImageDetail />} />
+          <Route path="/image/:id" element={<DetailPage />} />
         </Routes>
       ),
     });
@@ -77,7 +77,7 @@ describe("ImageDetail", () => {
       route: "/image/123",
       children: (
         <Routes>
-          <Route path="/image/:id" element={<ImageDetail />} />
+          <Route path="/image/:id" element={<DetailPage />} />
         </Routes>
       ),
     });

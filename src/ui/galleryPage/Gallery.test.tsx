@@ -1,12 +1,12 @@
 import { screen, waitFor, fireEvent, act } from "@testing-library/react";
 import { Route, Routes } from "react-router-dom";
 import { renderWithRouter } from "@/test-utils/renderWithRouter";
-import Gallery from "@/ui/Gallery/Gallery";
+import Gallery from "@/ui/galleryPage/Gallery";
 import useGetImages from "@/ui/hooks/useGetImages";
 
 jest.mock("@/ui/hooks/useGetImages");
 
-jest.mock("@/ui/Gallery/Card", () => ({
+jest.mock("@/ui/GalleryPage/Card", () => ({
   Card: ({ id }: { id: string }) => (
     <div data-testid={`card-${id}`}>Card {id}</div>
   ),

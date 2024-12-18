@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { LazyImage } from "@/ui/Gallery/LazyImage";
+import { LazyImage } from "@/ui/galleryPage/LazyImage";
 
 interface CardProps {
   id: string;

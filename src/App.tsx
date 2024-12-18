@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Gallery from "@/ui/Gallery/Gallery";
-import ImageDetail from "@/ui/ImageDetail/ImageDetail";
+import Gallery from "@/ui/galleryPage/Gallery";
+import ImageDetail from "@/ui/detailPage/DetailPage";
 import NotFound from "@/ui/404/NotFound";
 
 const App: React.FC = () => {

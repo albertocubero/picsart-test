@@ -1,8 +1,8 @@
 import { screen } from "@testing-library/react";
 import { renderWithRouter } from "@/test-utils/renderWithRouter";
-import { Card } from "@/ui/Gallery/Card";
+import { Card } from "@/ui/galleryPage/Card";
 
-jest.mock("@/ui/Gallery/LazyImage", () => ({
+jest.mock("@/ui/GalleryPage/LazyImage", () => ({
   LazyImage: jest.fn(({ url, height }) => (
     <img src={url} alt="LazyImage" data-testid="lazy-image" style={{ height: `${height}px` }} />
   )),

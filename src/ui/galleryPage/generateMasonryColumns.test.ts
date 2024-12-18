@@ -1,4 +1,4 @@
-import { generateMasonryColumns, Image, MasonryColumn } from "@/ui/Gallery/generateMasonryColumns";
+import { generateMasonryColumns, Image, MasonryColumn } from "@/ui/galleryPage/generateMasonryColumns";
 
 describe("generateMasonryColumns", () => {
   it("should generate the correct number of columns", () => {

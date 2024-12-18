@@ -1,5 +1,5 @@
 import { render, screen, act } from "@testing-library/react";
-import { LazyImage } from "@/ui/Gallery/LazyImage";
+import { LazyImage } from "@/ui/galleryPage/LazyImage";
 
 describe("LazyImage Component", () => {
   const mockProps = {
