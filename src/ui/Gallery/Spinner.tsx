@@ -21,6 +21,7 @@ const SpinnerWrapper = styled.div`
 
 const CenteredSpinnerWrapper = styled.div`
   position: absolute;
+  width: "100%";
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -36,7 +37,10 @@ interface SpinnerProps {
 }
 
 export const Spinner: React.FC<SpinnerProps> = ({ containerHeight }) => (
-  <CenteredSpinnerWrapper style={{ width: "100%", height: containerHeight }}>
-    <SpinnerWrapper />
+  <CenteredSpinnerWrapper
+    data-testid="spinner-wrapper"
+    style={{ height: containerHeight }}
+  >
+    <SpinnerWrapper data-testid="spinner" />
   </CenteredSpinnerWrapper>
 );
