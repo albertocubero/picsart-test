@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, memo } from "react";
+import styled from "styled-components";
 import useGetImages from "@/ui/hooks/useGetImages";
 import { generateMasonryColumns, Image, MasonryColumn } from "./generateMasonryColumns";
 import { Card } from "./Card";
@@ -12,6 +13,17 @@ const getColumnCount = (width: number): number => {
   if (width <= 1920) return 4;
   return 5;
 };
+
+const GalleryContainer = styled.div`
+  display: flex;
+  gap: 16px;
+  overflow-y: auto;
+  height: 100vh;
+`;
+
+const Column = styled.div`
+  flex: 1;
+`;
 
 const Gallery: React.FC = () => {
   const [page, setPage] = useState<number>(1);
@@ -74,26 +86,17 @@ const Gallery: React.FC = () => {
   }, []);
 
   return (
-    <div
-      id="gallery-container"
-      data-testid="gallery-container"
-      style={{
-        display: "flex",
-        gap: "16px",
-        overflowY: "auto",
-        height: "100vh",
-      }}
-    >
+    <GalleryContainer id="gallery-container" data-testid="gallery-container">
       {isError && <ErrorMessage />}
       {columns.map((column) => (
-        <div key={column.id} style={{ flex: 1 }} data-testid="column">
+        <Column key={column.id} data-testid="column">
           {column.images.map(({ id, url, height = 200 }) => (
             <Card key={id} id={id} url={url} height={height} />
           ))}
-        </div>
+        </Column>
       ))}
       {isLoading && <LoadingMessage />}
-    </div>
+    </GalleryContainer>
   );
 };
 
