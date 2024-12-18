@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback, memo } from "react";
 import useGetImages from "@/ui/hooks/useGetImages";
 import { generateMasonryColumns, Image, MasonryColumn } from "./generateMasonryColumns";
 import { Card } from "./Card";
+import { ErrorMessage } from "./ErrorMessage";
+import { LoadingMessage } from "./LoadingMessage";
 
 const getColumnCount = (width: number): number => {
   if (width <= 768) return 1;
@@ -82,23 +84,7 @@ const Gallery: React.FC = () => {
         height: "100vh",
       }}
     >
-      {isError && (
-        <p
-          data-testid="error-message"
-          style={{
-            position: "fixed",
-            top: "0",
-            left: "50%",
-            transform: "translateX(-50%)",
-            fontSize: "16px",
-            color: "white",
-            backgroundColor: "red",
-            padding: "8px",
-          }}
-        >
-          Error loading images. Please try again.
-        </p>
-      )}
+      {isError && <ErrorMessage />}
       {columns.map((column) => (
         <div key={column.id} style={{ flex: 1 }} data-testid="column">
           {column.images.map(({ id, url, height = 200 }) => (
@@ -106,22 +92,7 @@ const Gallery: React.FC = () => {
           ))}
         </div>
       ))}
-      {isLoading && (
-        <p
-          data-testid="loading-message"
-          style={{
-            position: "fixed",
-            top: "0",
-            left: "50%",
-            transform: "translateX(-50%)",
-            fontSize: "16px",
-            backgroundColor: "red",
-            padding: "8px",
-          }}
-        >
-          Loading more images...
-        </p>
-      )}
+      {isLoading && <LoadingMessage />}
     </div>
   );
 };

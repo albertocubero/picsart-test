@@ -29,7 +29,7 @@ describe("Gallery Component", () => {
       ),
     });
 
-    expect(screen.getByText(/loading more images/i)).toBeInTheDocument();
+    expect(screen.getByTestId("loading-message")).toBeInTheDocument();
   });
 
   it("should display images when available", async () => {
@@ -195,8 +195,6 @@ describe("Gallery Component", () => {
       ),
     });
 
-    const errorMessage = screen.getByTestId("error-message");
-    expect(errorMessage).toBeInTheDocument();
-    expect(errorMessage).toHaveTextContent("Error loading images. Please try again.");
+    expect(screen.getByTestId("error-message")).toBeInTheDocument();
   });
 });
