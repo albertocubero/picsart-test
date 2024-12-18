@@ -1,15 +1,10 @@
 import React, { useState, useEffect, useCallback, memo } from "react";
 import styled from "styled-components";
-import useGetImages, { UseGetImagesResult } from "@/ui/hooks/useGetImages";
-import {
-  generateMasonryColumns,
-  MasonryColumn,
-} from "./generateMasonryColumns";
+import useGetImages from "@/ui/hooks/useGetImages";
+import { generateMasonryColumns, Image, MasonryColumn } from "./generateMasonryColumns";
 import { Card } from "./Card";
 import { ErrorMessage } from "./ErrorMessage";
 import { LoadingMessage } from "./LoadingMessage";
-
-const INITIAL_PAGE = 1;
 
 const getColumnCount = (width: number): number => {
   if (width <= 768) return 1;
@@ -32,14 +27,13 @@ const Column = styled.div`
 `;
 
 const Gallery: React.FC = () => {
-  const [page, setPage] = useState<number>(INITIAL_PAGE);
+  const [page, setPage] = useState<number>(1);
+  const [allImages, setAllImages] = useState<Image[]>([]);
   const [columns, setColumns] = useState<MasonryColumn[]>([]);
-  const [columnCount, setColumnCount] = useState<number>(
-    getColumnCount(window.innerWidth)
-  );
-  const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [columnCount, setColumnCount] = useState<number>(getColumnCount(window.innerWidth));
+  const [isFetching, setIsFetching] = useState(false);
 
-  const { images, isLoading, isError }: UseGetImagesResult = useGetImages(page);
+  const { images, isLoading, isError } = useGetImages(page);
 
   const loadMore = useCallback(() => {
     if (!isFetching && !isLoading && !isError) {
@@ -55,23 +49,15 @@ const Gallery: React.FC = () => {
   }, [page]);
 
   useEffect(() => {
-    const container = document.getElementById("gallery-container");
-    const currentScrollPosition = container ? container.scrollTop : 0;
-
-    setColumns((prevColumns) => {
-      const updatedColumns = generateMasonryColumns(
-        prevColumns,
-        images,
-        columnCount
-      );
-
-      return updatedColumns;
-    });
-
-    if (container) {
-      container.scrollTop = currentScrollPosition;
+    if (images.length > 0) {
+      setAllImages((prevImages) => [...prevImages, ...images]);
     }
-  }, [images, columnCount]);
+  }, [images]);
+
+  useEffect(() => {
+    const updatedColumns = generateMasonryColumns(allImages, columnCount);
+    setColumns(updatedColumns);
+  }, [allImages, columnCount]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -79,8 +65,7 @@ const Gallery: React.FC = () => {
 
       if (
         container &&
-        container.scrollHeight - container.scrollTop <=
-          container.clientHeight * 1.3
+        container.scrollHeight - container.scrollTop <= container.clientHeight * 1.3
       ) {
         loadMore();
       }

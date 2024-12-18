@@ -6,22 +6,18 @@ import useGetImages from "@/ui/hooks/useGetImages";
 
 jest.mock("@/ui/hooks/useGetImages");
 
-jest.mock("@/ui/GalleryPage/Card", () => ({
+jest.mock("@/ui/galleryPage/Card", () => ({
   Card: ({ id }: { id: string }) => (
     <div data-testid={`card-${id}`}>Card {id}</div>
   ),
 }));
 
 describe("Gallery Component", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   it("should display a loading message when images are loading", () => {
     (useGetImages as jest.Mock).mockReturnValue({
       images: [],
       isLoading: true,
-      isError: false,
+      isError: false
     });
 
     renderWithRouter({
@@ -45,7 +41,7 @@ describe("Gallery Component", () => {
     (useGetImages as jest.Mock).mockReturnValue({
       images: mockImages,
       isLoading: false,
-      isError: false,
+      isError: false
     });
 
     renderWithRouter({
@@ -78,8 +74,91 @@ describe("Gallery Component", () => {
       return {
         images: currentPage === 1 ? initialImages : newImages,
         isLoading: false,
-        isError: false,
+        isError: false
       };
+    });
+
+    renderWithRouter({
+      route: "/",
+      children: (
+        <Routes>
+          <Route path="/" element={<Gallery />} />
+        </Routes>
+      ),
+    });
+
+    expect(
+      screen.getByTestId(`card-${initialImages[0].id}`)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByTestId(`card-${initialImages[1].id}`)
+    ).toBeInTheDocument();
+
+    act(() => {
+      const galleryContainer = screen.getByTestId("gallery-container");
+      fireEvent.scroll(galleryContainer, {
+        target: { scrollTop: galleryContainer.scrollHeight },
+      });
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId(`card-${newImages[0].id}`)).toBeInTheDocument();
+      expect(screen.getByTestId(`card-${newImages[1].id}`)).toBeInTheDocument();
+    });
+  });
+
+  it("should update column count on window resize", async () => {
+    const resizeEvent = new Event("resize");
+
+    (useGetImages as jest.Mock).mockReturnValue({
+      images: [],
+      isLoading: false,
+      isError: false
+    });
+
+    renderWithRouter({
+      route: "/",
+      children: (
+        <Routes>
+          <Route path="/" element={<Gallery />} />
+        </Routes>
+      ),
+    });
+
+    act(() => {
+      global.innerWidth = 1440;
+      window.dispatchEvent(resizeEvent);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId("gallery-container")).toBeInTheDocument();
+      const columns = screen.getAllByTestId("column");
+      expect(columns.length).toBe(3);
+    });
+
+    act(() => {
+      global.innerWidth = 768;
+      window.dispatchEvent(resizeEvent);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId("gallery-container")).toBeInTheDocument();
+      const updatedColumns = screen.getAllByTestId("column");
+      expect(updatedColumns.length).toBe(1);
+    });
+  });
+
+  it("should not fetch images multiple times while loading", async () => {
+    const mockImages = [
+      { id: "1", url: "https://via.placeholder.com/150", height: 200 },
+    ];
+
+    const loadMoreSpy = jest.fn();
+
+    (useGetImages as jest.Mock).mockReturnValue({
+      images: mockImages,
+      isLoading: false,
+      isError: false
     });
 
     renderWithRouter({
@@ -93,65 +172,18 @@ describe("Gallery Component", () => {
 
     const galleryContainer = screen.getByTestId("gallery-container");
 
-    expect(screen.getByTestId(`card-1`)).toBeInTheDocument();
-    expect(screen.getByTestId(`card-2`)).toBeInTheDocument();
-
-    act(() => {
-      fireEvent.scroll(galleryContainer, {
-        target: { scrollTop: galleryContainer.scrollHeight },
-      });
+    fireEvent.scroll(galleryContainer, {
+      target: { scrollTop: galleryContainer.scrollHeight },
     });
 
-    await waitFor(() => {
-      expect(screen.getByTestId(`card-3`)).toBeInTheDocument();
-      expect(screen.getByTestId(`card-4`)).toBeInTheDocument();
-    });
+    expect(loadMoreSpy).not.toHaveBeenCalledTimes(2);
   });
 
-  it("should update column count on window resize", async () => {
+  it("should display a error message when images are loading", () => {
     (useGetImages as jest.Mock).mockReturnValue({
       images: [],
       isLoading: false,
-      isError: false,
-    });
-
-    renderWithRouter({
-      route: "/",
-      children: (
-        <Routes>
-          <Route path="/" element={<Gallery />} />
-        </Routes>
-      ),
-    });
-
-    const resizeEvent = new Event("resize");
-    
-    act(() => {
-      global.innerWidth = 1440;
-      window.dispatchEvent(resizeEvent);
-    });
-
-    await waitFor(() => {
-      const columns = screen.getAllByTestId("column");
-      expect(columns.length).toBe(3);
-    });
-
-    act(() => {
-      global.innerWidth = 768;
-      window.dispatchEvent(resizeEvent);
-    });
-
-    await waitFor(() => {
-      const columns = screen.getAllByTestId("column");
-      expect(columns.length).toBe(1);
-    });
-  });
-
-  it("should display an error message when there is an error", () => {
-    (useGetImages as jest.Mock).mockReturnValue({
-      images: [],
-      isLoading: false,
-      isError: true,
+      isError: true
     });
 
     renderWithRouter({

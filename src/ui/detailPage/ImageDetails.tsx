@@ -34,12 +34,10 @@ const InfoRow = styled.div`
 const LazyImageWrapper = styled.div`
   width: 100%;
   margin: 0 0 24px 0;
-  // aspect-ratio: 16/9; /* Aquí se establece una relación de aspecto de 16:9 para la altura proporcional */
 
   @media (min-width: 1024px) {
     max-width: 66.66%;
     margin: 0;
-    // aspect-ratio: unset; /* Desactiva la proporción en resoluciones grandes */
   }
 `;
 
