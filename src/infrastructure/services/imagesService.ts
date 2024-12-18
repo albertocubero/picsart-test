@@ -1,19 +1,14 @@
 import axios, { AxiosError } from "axios";
 import { VITE_PEXELS_API_KEY } from "@/config";
+import { IImage } from "@/domain/interfaces/IImage";
+import { IImageDetails } from "@/domain/interfaces/IImageDetails";
 
 const PEXELS_API_BASE_URL = "https://api.pexels.com/v1";
 const PEXELS_API_KEY = VITE_PEXELS_API_KEY;
 
 export interface IImagesService {
-  getImages(page: number): Promise<{ id: string; url: string }[]>;
-  getImageById(id: string): Promise<{
-    id: string;
-    url: string;
-    photographer: string;
-    photographer_url: string;
-    alt: string;
-    src: string;
-  }>;
+  getImages(page: number): Promise<IImage[]>;
+  getImageById(id: string): Promise<IImageDetails>;
 }
 
 export class ImagesService implements IImagesService {

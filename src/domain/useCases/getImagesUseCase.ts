@@ -1,4 +1,5 @@
 import { imagesRepository, IImagesRepository } from "@/infrastructure/repositories/imagesRepository";
+import { IImage } from "../interfaces/IImage";
 
 export class GetImagesUseCase {
   private static instance: GetImagesUseCase;
@@ -15,7 +16,7 @@ export class GetImagesUseCase {
     return GetImagesUseCase.instance;
   }
 
-  async execute(page: number): Promise<{ id: string; url: string }[]> {
+  async execute(page: number): Promise<IImage[]> {
     return this.imagesRepository.getImages(page);
   }
 }

@@ -1,9 +1,17 @@
-import { IImagesService, imagesService } from "@/infrastructure/services/imagesService";
-import { localStorageCache, LocalStorageCache } from "@/infrastructure/services/localStorageCache";
+import { IImage } from "@/domain/interfaces/IImage";
+import { IImageDetails } from "@/domain/interfaces/IImageDetails";
+import {
+  IImagesService,
+  imagesService,
+} from "@/infrastructure/services/imagesService";
+import {
+  localStorageCache,
+  LocalStorageCache,
+} from "@/infrastructure/services/localStorageCache";
 
 const STORAGE_KEY_PREFIX = "pexels";
 
-export class CachedImagesService implements IImagesService{
+export class CachedImagesService implements IImagesService {
   private static instance: CachedImagesService;
   private imageService: IImagesService;
   private localStorageCache: LocalStorageCache;
@@ -26,9 +34,10 @@ export class CachedImagesService implements IImagesService{
     return CachedImagesService.instance;
   }
 
-  async getImages(page: number): Promise<{ id: string; url: string }[]> {
+  async getImages(page: number): Promise<IImage[]> {
     const cacheKey = `${STORAGE_KEY_PREFIX}_images_${page}`;
-    const cachedData: any = this.localStorageCache.getFromStorage(cacheKey);
+    const cachedData: IImage[] | null =
+      this.localStorageCache.getFromStorage(cacheKey);
 
     if (cachedData) {
       return cachedData;
@@ -39,9 +48,10 @@ export class CachedImagesService implements IImagesService{
     return data;
   }
 
-  async getImageById(id: string): Promise<any> {
+  async getImageById(id: string): Promise<IImageDetails> {
     const cacheKey = `${STORAGE_KEY_PREFIX}_image_${id}_info`;
-    const cachedData = this.localStorageCache.getFromStorage(cacheKey);
+    const cachedData: IImageDetails | null =
+      this.localStorageCache.getFromStorage(cacheKey);
 
     if (cachedData) {
       return cachedData;

@@ -1,9 +1,11 @@
 import { IImagesService } from "@/infrastructure/services/imagesService";
 import { cachedImagesService } from "@/infrastructure/services/cachedImagesService";
+import { IImage } from "@/domain/interfaces/IImage";
+import { IImageDetails } from "@/domain/interfaces/IImageDetails";
 
 export interface IImagesRepository {
-  getImages(page: number): Promise<{ id: string; url: string }[]>;
-  getImageById(id: string): Promise<any>;
+  getImages(page: number): Promise<IImage[]>;
+  getImageById(id: string): Promise<IImageDetails>;
 }
 
 export class ImagesRepository implements IImagesRepository {
@@ -21,11 +23,11 @@ export class ImagesRepository implements IImagesRepository {
     return ImagesRepository.instance;
   }
 
-  async getImages(page: number): Promise<{ id: string; url: string }[]> {
+  async getImages(page: number): Promise<IImage[]> {
     return this.imagesService.getImages(page);
   }
 
-  async getImageById(id: string): Promise<any> {
+  async getImageById(id: string): Promise<IImageDetails> {
     return this.imagesService.getImageById(id);
   }
 }

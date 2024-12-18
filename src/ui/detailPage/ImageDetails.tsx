@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import styled from "styled-components";
 import { LazyImage } from "@/ui/galleryPage/LazyImage";
+import { IImageDetails } from "@/domain/interfaces/IImageDetails";
 
 const InfoContainer = styled.div`
   background-color: #ffffff;
@@ -42,13 +43,7 @@ const LazyImageWrapper = styled.div`
 `;
 
 interface ImageDetailsProps {
-  imageInfo: {
-    id: string;
-    photographer: string;
-    photographer_url: string;
-    alt: string;
-    src: string;
-  };
+  imageInfo: IImageDetails;
 }
 
 const ImageDetails: React.FC<ImageDetailsProps> = memo(({ imageInfo }) => (

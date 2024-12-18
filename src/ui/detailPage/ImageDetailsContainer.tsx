@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import styled from "styled-components";
 import ImageDetails from "@/ui/detailPage/ImageDetails";
+import { IImageDetails } from "@/domain/interfaces/IImageDetails";
 
 const Container = styled.div`
   margin: 0 auto;
@@ -8,7 +9,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  backgroundColor: red;
+  backgroundcolor: red;
 
   @media (min-width: 1024px) {
     flex-direction: row;
@@ -17,10 +18,12 @@ const Container = styled.div`
 `;
 
 interface ImageDetailsContainerProps {
-  imageInfo: any;
+  imageInfo: IImageDetails;
 }
 
-const ImageDetailsContainer: React.FC<ImageDetailsContainerProps> = ({ imageInfo }) => {
+const ImageDetailsContainer: React.FC<ImageDetailsContainerProps> = ({
+  imageInfo,
+}) => {
   return (
     <Container>
       <ImageDetails imageInfo={imageInfo} />

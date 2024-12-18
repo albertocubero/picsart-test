@@ -1,4 +1,8 @@
-import { imagesRepository, IImagesRepository } from "@/infrastructure/repositories/imagesRepository";
+import {
+  imagesRepository,
+  IImagesRepository,
+} from "@/infrastructure/repositories/imagesRepository";
+import { IImageDetails } from "../interfaces/IImageDetails";
 
 export class GetImageInfoUseCase {
   private static instance: GetImageInfoUseCase;
@@ -15,7 +19,7 @@ export class GetImageInfoUseCase {
     return GetImageInfoUseCase.instance;
   }
 
-  async execute(id: string): Promise<any> {
+  async execute(id: string): Promise<IImageDetails> {
     return this.imagesRepository.getImageById(id);
   }
 }
